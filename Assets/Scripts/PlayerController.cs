@@ -44,6 +44,8 @@ public class PlayerController : MonoBehaviour
 
         lookAngle = Mathf.Clamp(lookAngle + -lookAction.ReadValue<Vector2>().y * (lookSpeed * Time.deltaTime), -80, 80);
 
+        print(Time.deltaTime);
+        
         camera.transform.localRotation = Quaternion.Euler(new Vector3(lookAngle, 0, 0));
     }
 

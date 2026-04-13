@@ -30,7 +30,7 @@ public class PlayerInteract : MonoBehaviour
 
     private void Update()
     {
-        bool didHitObject = Physics.Raycast(cameraTransform.position, cameraTransform.forward, 
+        /*bool didHitObject = Physics.Raycast(cameraTransform.position, cameraTransform.forward, 
             out RaycastHit hitInfo,interactDist, interactLayerMask);
 
         GameObject objectHit = hitInfo.collider.gameObject;
@@ -40,7 +40,7 @@ public class PlayerInteract : MonoBehaviour
             print($"clicked {objectHit.name}");
             
             
-        }
+        }*/
     }
 }
 
