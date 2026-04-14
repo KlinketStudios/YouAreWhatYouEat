@@ -1,11 +1,13 @@
 using System;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInteract : MonoBehaviour
 {
     [SerializeField] private InputActionAsset inputAction;
-    private InputAction interactionAction;
+    private InputAction leftInteractionAction;
+    private InputAction rightInteractionAction;
 
     private PlayerData playerData;
     [SerializeField] private Transform cameraTransform;
@@ -14,7 +16,8 @@ public class PlayerInteract : MonoBehaviour
     
     private void OnEnable()
     {
-        interactionAction = inputAction.FindAction("Interact");
+        rightInteractionAction = inputAction.FindAction("RightInteract");
+        leftInteractionAction = inputAction.FindAction("LeftInteract");
         inputAction.Enable();
     }
 
@@ -30,17 +33,43 @@ public class PlayerInteract : MonoBehaviour
 
     private void Update()
     {
-        /*bool didHitObject = Physics.Raycast(cameraTransform.position, cameraTransform.forward, 
+        bool didHitObject = Physics.Raycast(cameraTransform.position, cameraTransform.forward, 
             out RaycastHit hitInfo,interactDist, interactLayerMask);
 
-        GameObject objectHit = hitInfo.collider.gameObject;
+        GameObject objectHit = null;
+
+        if (didHitObject)
+            return;
         
-        if (interactionAction.WasPerformedThisFrame())
+            
+        objectHit = hitInfo.collider.gameObject;
+        
+        if (leftInteractionAction.WasPerformedThisFrame())
         {
-            print($"clicked {objectHit.name}");
+
+            if (!playerData.HandedIsHolding(GrabHand.LeftHand))
+            {
+                print($"clicked {objectHit.name} with left hand with empty hand");
+            }
+            else
+            {
+                print($"clicked {objectHit.name} with left hand with something in hand");
+            }
+        }
+        if (rightInteractionAction.WasPerformedThisFrame())
+        {
             
-            
-        }*/
+            if (playerData.HandedIsHolding(GrabHand.RightHand))
+            {
+                print($"clicked {objectHit.name} with right hand with empty hand");
+            }
+            else
+            {
+                print($"clicked {objectHit.name} with right hand with something in hand");
+            }
+
+        }
     }
+
 }
 

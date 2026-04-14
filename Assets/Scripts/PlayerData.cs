@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using VHierarchy.Libs;
+﻿using System;
+using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
@@ -10,11 +10,28 @@ public class PlayerData : MonoBehaviour
 
     public bool HandedIsHolding(GrabHand grabHand)
     {
-        return (bool)this.GetFieldValue($"isHoldingSomething{grabHand.ToString()}");
+        switch (grabHand)
+        {
+            case GrabHand.LeftHand:
+                return isHoldingSomethingInLeftHand;
+            case GrabHand.RightHand:
+                return isHoldingSomethingInRightHand;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(grabHand), grabHand, null);
+        }
     }
     public GameObject HandedHeldObject(GrabHand grabHand)
     {
-        return (GameObject)this.GetFieldValue($"objectIn{grabHand.ToString()}");
+
+        switch (grabHand)
+        {
+            case GrabHand.LeftHand:
+                return objectInLeftHand;
+            case GrabHand.RightHand:
+                return objectInRightHand;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(grabHand), grabHand, null);
+        }
     }
 }
 
