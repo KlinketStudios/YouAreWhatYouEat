@@ -16,16 +16,15 @@ public class LookAtMainCamera : MonoBehaviour
 
         constraint.worldUpType = worldUpType;
         
-        constraint.locked = true;
         constraint.constraintActive = true;
 
         if (lockX)
         {
-            constraint.rotationAxis = Axis.Y;
+            constraint.rotationAxis = Axis.Y | Axis.Z;
         }
         else
         {
-            constraint.rotationAxis = Axis.X | Axis.Y;
+            constraint.rotationAxis = Axis.X | Axis.Y | Axis.Z;
         }
         
         
