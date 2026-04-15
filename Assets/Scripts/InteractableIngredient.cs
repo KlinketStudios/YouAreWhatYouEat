@@ -8,6 +8,9 @@ public class InteractableIngredient : MonoBehaviour, IIngredient
     private GameObject thisObject;
     private int oldLayer;
     private IInteractable listener;
+    private Plate currentPlate;
+    private IClickListener clickListener;
+    private bool isPickupable = true;
 
     private void Awake()
     {
@@ -16,12 +19,36 @@ public class InteractableIngredient : MonoBehaviour, IIngredient
 
     public void Interacted(GrabHand grabHand)
     {
-        GetComponent<IPickupAndPlaceable>().PickUp(grabHand);
+        if (currentPlate == null && isPickupable)
+        {
+            GetComponent<IPickupAndPlaceable>().PickUp(grabHand);
+        }
+        else
+        {
+            clickListener.Click(grabHand);
+        }
     }
 
     public void InteractedWithObjectInHand(GameObject obj, GrabHand grabHand)
     {
-        print("Interacted with object in hand");
+        if (currentPlate == null && isPickupable)
+        {
+            print("Interacted with object in hand");
+        }
+        else
+        {
+            clickListener.ClickWithObjectInHand(obj, grabHand);
+        }
+    }
+
+    public void Click(GrabHand grabHand)
+    {
+        Interacted(grabHand);
+    }
+
+    public void ClickWithObjectInHand(GameObject obj, GrabHand grabHand)
+    {
+        InteractedWithObjectInHand(obj, grabHand);
     }
 
     public Transform Origin

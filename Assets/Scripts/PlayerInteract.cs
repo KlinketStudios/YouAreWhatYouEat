@@ -63,10 +63,6 @@ public class PlayerInteract : MonoBehaviour
         }
         SetCrosshairSprite(hitInfo.normal, didHitObject, obj);
         
-        
-
-
-        
     }
 
     //i want to make the crosshair split in half so that you can see what actions either hand can do 

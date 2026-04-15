@@ -1,4 +1,7 @@
-﻿public interface IClickListener : IInteractable
+﻿using UnityEngine;
+
+public interface IClickListener 
 {
-    public IInteractable Listener { get; set; } 
+    public void Click(GrabHand grabHand);
+    public void ClickWithObjectInHand(GameObject obj, GrabHand grabHand);
 }
