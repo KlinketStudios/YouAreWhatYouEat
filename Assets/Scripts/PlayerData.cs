@@ -12,7 +12,7 @@ public class PlayerData : MonoBehaviour
     public Transform leftHandGrabPoint;
 
     public string grabLayer;
-    
+
     public bool HandedIsHolding(GrabHand grabHand)
     {
         switch (grabHand)
@@ -25,9 +25,9 @@ public class PlayerData : MonoBehaviour
                 throw new ArgumentOutOfRangeException(nameof(grabHand), grabHand, null);
         }
     }
+
     public GameObject HandedHeldObject(GrabHand grabHand)
     {
-
         switch (grabHand)
         {
             case GrabHand.LeftHand:
@@ -51,7 +51,7 @@ public class PlayerData : MonoBehaviour
                 throw new ArgumentOutOfRangeException(nameof(grabHand), grabHand, null);
         }
     }
-    
+
     public void HandedSetObjectInHand(GameObject obj, GrabHand grabHand)
     {
         switch (grabHand)

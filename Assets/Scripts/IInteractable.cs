@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 public interface IInteractable
 {
@@ -9,5 +8,4 @@ public interface IInteractable
     {
         Interacted(grabHand);
     }
-    
 }

@@ -4,7 +4,6 @@ public class TrashCan : MonoBehaviour, IInteractable
 {
     public void Interacted(GrabHand grabHand)
     {
-        
     }
 
     public void InteractedWithObjectInHand(GameObject obj, GrabHand grabhand)
