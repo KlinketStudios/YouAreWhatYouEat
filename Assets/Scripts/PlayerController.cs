@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float lookSpeed = 2f;
     
-    private float gravity;
+    [SerializeField] private float gravity;
     private float lookAngle;
     private Vector3 moveDir;
     

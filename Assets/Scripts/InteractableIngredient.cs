@@ -1,11 +1,13 @@
 using System;
 using UnityEngine;
 
-public class InteractableIngredient : MonoBehaviour, IInteractable, IPickupAndPlaceable
+public class InteractableIngredient : MonoBehaviour, IIngredient
 {
     [SerializeField] private Transform origin;
+    public IngredientTypes type;
     private GameObject thisObject;
     private int oldLayer;
+    private IInteractable listener;
 
     private void Awake()
     {
@@ -38,5 +40,17 @@ public class InteractableIngredient : MonoBehaviour, IInteractable, IPickupAndPl
     {
         get => oldLayer;
         set => oldLayer = value;
+    }
+
+    public IInteractable Listener
+    {
+        get => listener;
+        set => listener = value;
+    }
+
+    public IngredientTypes Type
+    {
+        get => type;
+        set => type = value;
     }
 }
