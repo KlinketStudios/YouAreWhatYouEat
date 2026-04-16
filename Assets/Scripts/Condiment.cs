@@ -2,6 +2,10 @@
 
 public class Condiment : MonoBehaviour, ICondiment
 {
+
+    public IngredientTypes type;
+    private IClickListener clickListener;
+
     public void Interacted(GrabHand grabHand)
     {
         ClickListener?.Click(grabHand);
@@ -12,7 +16,15 @@ public class Condiment : MonoBehaviour, ICondiment
         ClickListener?.ClickWithObjectInHand(obj, grabHand);
     }
 
-    public IngredientTypes Type { get; set; }
+    public IngredientTypes Type
+    {
+        get => type;
+        set => type = value;
+    }
 
-    public IClickListener ClickListener { get; set; }
+    public IClickListener ClickListener
+    {
+        get => clickListener;
+        set => clickListener = value;
+    }
 }

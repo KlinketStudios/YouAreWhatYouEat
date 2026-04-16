@@ -1,13 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
+using VHierarchy.Libs;
 
-public class Plate : MonoBehaviour, IInteractable, IClickListener
+public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPlaceable
 {
     [SerializeField] private float ingredientOffset = .005f;
-    [HideInInspector] public List<OrderableIngredients> ingredientStack = new();
+    public List<OrderableIngredients> ingredientStack = new();
+    [HideInInspector] public List<GameObject> ingredientStackObjs = new();
     [SerializeField] private Transform stackPosition;
 
     private PlayerData playerData;
+    public Transform origin;
+    public GameObject thisObject;
+    private int oldLayer;
 
     private void Awake()
     {
@@ -16,7 +21,11 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener
 
     public void Click(GrabHand grabHand)
     {
-        Interacted(grabHand);
+        var heldItem = playerData.HandedHeldObject(grabHand);
+        if (heldItem.TryGetComponent(out IIngredient ingredient))
+        {
+            //grab top item
+        }
     }
 
     public void ClickWithObjectInHand(GameObject obj, GrabHand grabHand)
@@ -26,11 +35,7 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener
 
     public void Interacted(GrabHand grabHand)
     {
-        var heldItem = playerData.HandedHeldObject(grabHand);
-        if (heldItem.TryGetComponent(out IIngredient ingredient))
-        {
-            //grab top item
-        }
+        GetComponent<IPickupAndPlaceable>().PickUp(grabHand);
     }
 
     public void InteractedWithObjectInHand(GameObject obj, GrabHand grabHand)
@@ -38,11 +43,12 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener
         //check if is IIngredient
         if (obj.TryGetComponent(out IIngredient ingredient))
         {
-            //add Item to stack
+            AddItem(obj);
+            ingredient.PutDown(Vector3.zero,Vector3.zero, grabHand);
         }
     }
 
-    public IngredientTypes GetTopItem()
+    public GameObject GetTopItem(bool countCondiments)
     {
         for (var i = ingredientStack.Count - 1; i >= 0; i++)
         {
@@ -50,24 +56,83 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener
 
             if ((int)ingredient == 14 || (int)ingredient == 15 || (int)ingredient == 16)
             {
+                if (countCondiments)
+                {
+                    return ingredientStackObjs[i];
+                }
                 //ingredient is condiment
+                return ingredientStackObjs[i];
             }
-            //ingredient is not condiment
         }
 
-        //temp
-        return IngredientTypes.BreadLoaf;
+        return null;
     }
-    
-    public void AddItem(IIngredient ingredient)
+
+    public void AddItem(GameObject obj)
     {
-        ingredientStack.Add((OrderableIngredients)ingredient.Type);
-        /////ballhahhahdslkhsdf;lkh
-        /// checkpoint
-    }
+        print("hit");
+
+        if (obj.TryGetComponent(out IIngredient ingredient))
+        {
+            ingredientStack.AddAt<OrderableIngredients>((OrderableIngredients)ingredient.Type, ingredientStack.Count);
+            ingredientStackObjs.AddAt<GameObject>(obj, ingredientStackObjs.Count);
+
+            ingredient.ClickListener = this;
+            
+            if (ingredient.CondimentStack.Count != 0)
+            {
+                foreach (ICondiment condiment in ingredient.CondimentStack)
+                {
+                    ingredientStack.AddAt<OrderableIngredients>((OrderableIngredients)condiment.Type, ingredientStack.Count);
+                    ingredientStackObjs.AddAt<GameObject>(obj, ingredientStackObjs.Count);
+                    condiment.ClickListener = ingredient;
+                }
+            }
+        }
+        
+        //item is condiment and have to add the condiment to the top ingredient and the ingredient stack
+        else if (obj.TryGetComponent(out ICondiment condiment))
+        {
+            List<ICondiment> topItemCondimentStack = 
+                GetTopItem(false).GetComponent<IIngredient>().CondimentStack;
+            
+            int indexPosition = ingredientStackObjs.IndexOf(obj) + topItemCondimentStack.Count - 1;
+            
+            ingredientStack.AddAt<OrderableIngredients>((OrderableIngredients)condiment.Type,
+                indexPosition);
+
+            ingredientStackObjs.AddAt<GameObject>(obj, indexPosition);
+        }
+}
 
     public void RemoveIngredient(int ingredient)
     {
         
+    }
+
+    public Transform Origin
+    {
+        get => origin;
+        set => origin = value;
+    }
+
+    public GameObject ThisObject
+    {
+        get => thisObject;
+        set => thisObject = value;
+    }
+
+    public int OldLayer
+    {
+        get => oldLayer;
+        set => oldLayer = value;
+    }
+
+    public void Grabbed()
+    {
+    }
+
+    public void Placed()
+    {
     }
 }

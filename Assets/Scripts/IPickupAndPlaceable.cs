@@ -37,6 +37,12 @@ public interface IPickupAndPlaceable
         Placed();
     }
 
+    public void Consume(GrabHand grabHand)
+    {
+        PutDown(Vector3.zero,Vector3.zero, grabHand);
+        GameObject.Destroy(ThisObject);
+    }
+    
     public void Grabbed();
     public void Placed();
 }

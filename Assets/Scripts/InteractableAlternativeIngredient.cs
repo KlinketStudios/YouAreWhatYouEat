@@ -5,6 +5,7 @@ using UnityEngine;
 public class InteractableAlternativeIngredient : MonoBehaviour, IAlternativeIngredient
 {
     private Plate plate;
+    private IClickListener clickListener;
 
     public void Interacted(GrabHand grabHand)
     {
@@ -45,5 +46,11 @@ public class InteractableAlternativeIngredient : MonoBehaviour, IAlternativeIngr
     {
         get => plate;
         set => plate = value;
+    }
+
+    public IClickListener ClickListener
+    {
+        get => clickListener;
+        set => clickListener = value;
     }
 }

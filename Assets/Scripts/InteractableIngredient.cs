@@ -5,14 +5,14 @@ using UnityEngine.Animations;
 public class InteractableIngredient : MonoBehaviour, IIngredient
 {
     [SerializeField] private Transform origin;
-    [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private AimConstraint aimConstraint;
     public IngredientTypes type;
-    private IClickListener clickListener;
     private Plate currentPlate;
     private readonly bool isPickupable = true;
+    public List<ICondiment> condimentStack = new List<ICondiment>();
+    public IIngredient listener;
+    private IClickListener clickListener;
 
-    public IInteractable Listener { get; set; }
 
     private void Awake()
     {
@@ -71,11 +71,22 @@ public class InteractableIngredient : MonoBehaviour, IIngredient
         set => type = value;
     }
 
-    public List<ICondiment> CondimentStack { get; set; }
+    public List<ICondiment> CondimentStack
+    {
+        get => condimentStack;
+        set => condimentStack = value;
+    }
+
 
     public Plate Plate
     {
         get => currentPlate;
         set => currentPlate = value;
+    }
+
+    public IClickListener ClickListener
+    {
+        get => clickListener;
+        set => clickListener = value;
     }
 }

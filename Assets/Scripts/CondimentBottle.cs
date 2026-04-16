@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using VHierarchy.Libs;
 
 public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAndPlaceable
 {
@@ -10,7 +11,7 @@ public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAnd
 
     public void Interacted(GrabHand grabHand)
     {
-        throw new NotImplementedException();
+        GetComponent<IPickupAndPlaceable>().PickUp(grabHand);
     }
 
     public Transform Origin
@@ -29,16 +30,15 @@ public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAnd
 
     public void Grabbed()
     {
-        throw new NotImplementedException();
     }
 
     public void Placed()
     {
-        throw new NotImplementedException();
     }
 
     public void Use(GrabHand grabHand, bool usedOnObject, bool usedOnInteractable, GameObject objectUsedOn)
     {
+        print("use");
         if (!usedOnObject)
             //shot in air
             //maybe make it shoot a projectile that puts a splat where it lands
@@ -57,7 +57,8 @@ public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAnd
                 }
                 try
                 {
-                    ingredientUsedOn.CondimentStack.Add(condimentPrefab.GetComponent<ICondiment>());
+                    ingredientUsedOn.CondimentStack.AddAt<ICondiment>(condimentPrefab.GetComponent<ICondiment>(),
+                        ingredientUsedOn.CondimentStack.Count);
                 }
                 catch (Exception)
                 {

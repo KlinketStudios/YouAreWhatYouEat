@@ -11,11 +11,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gravity;
     private Camera camera;
 
-    private CharacterController cc;
+    [HideInInspector] public CharacterController cc;
     private InputAction lookAction;
     private float lookAngle;
     private InputAction moveAction;
-    private Vector3 moveDir;
+    [HideInInspector] public Vector3 moveDir;
+
+    [HideInInspector] public bool isMoving;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
@@ -31,6 +33,8 @@ public class PlayerController : MonoBehaviour
     {
         moveDir = new Vector3(moveAction.ReadValue<Vector2>().x, -gravity, moveAction.ReadValue<Vector2>().y);
 
+        isMoving = moveDir != new Vector3(0, -gravity, 0);
+        
         moveDir = moveDir.normalized;
 
         cc.Move(transform.TransformDirection(moveDir * (moveSpeed * Time.deltaTime)));

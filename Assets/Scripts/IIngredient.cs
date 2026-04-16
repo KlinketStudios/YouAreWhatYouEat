@@ -5,4 +5,5 @@ public interface IIngredient : IInteractable, IPickupAndPlaceable, IClickListene
     public IngredientTypes Type { get; set; }
     public List<ICondiment> CondimentStack { get; set; }
     public Plate Plate { get; set; }
+    public IClickListener ClickListener { get; set; }
 }
