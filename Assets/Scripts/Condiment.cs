@@ -5,6 +5,7 @@ public class Condiment : MonoBehaviour, ICondiment
 
     public IngredientTypes type;
     private IClickListener clickListener;
+    public IIngredient ingredientOn;
 
     public void Interacted(GrabHand grabHand)
     {
@@ -26,5 +27,11 @@ public class Condiment : MonoBehaviour, ICondiment
     {
         get => clickListener;
         set => clickListener = value;
+    }
+
+    public IIngredient IngredientOn
+    {
+        get => ingredientOn;
+        set => ingredientOn = value;
     }
 }

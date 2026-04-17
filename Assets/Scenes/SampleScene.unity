@@ -1449,6 +1449,7 @@ MonoBehaviour:
   origin: {fileID: 1012565931}
   thisObject: {fileID: 1012565926}
   condimentPrefab: {fileID: 675603901}
+  stackDist: 0.01
 --- !u!65 &1012565928
 BoxCollider:
   m_ObjectHideFlags: 0

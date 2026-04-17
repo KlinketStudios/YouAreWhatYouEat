@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using VHierarchy.Libs;
 
@@ -21,11 +22,7 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
 
     public void Click(GrabHand grabHand)
     {
-        var heldItem = playerData.HandedHeldObject(grabHand);
-        if (heldItem.TryGetComponent(out IIngredient ingredient))
-        {
-            //grab top item
-        }
+        RemoveIngredient(ingredientStack.IndexOf((OrderableIngredients)GetTopItem(false).GetComponent<IIngredient>().Type), grabHand);
     }
 
     public void ClickWithObjectInHand(GameObject obj, GrabHand grabHand)
@@ -45,12 +42,16 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
         {
             AddItem(obj);
             ingredient.PutDown(Vector3.zero,Vector3.zero, grabHand);
+            ingredient.Plate = this;
+            ingredient.ClickListener = this;
         }
     }
 
+    [ContextMenu("test")]
     public GameObject GetTopItem(bool countCondiments)
     {
-        for (var i = ingredientStack.Count - 1; i >= 0; i++)
+        //this shii not working!!! im krilling myself
+        for (var i = ingredientStack.Count; i >= 0; i++)
         {
             var ingredient = ingredientStack[i];
 
@@ -58,20 +59,22 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
             {
                 if (countCondiments)
                 {
+                    print(i);
                     return ingredientStackObjs[i];
                 }
+
+                print(i);
                 //ingredient is condiment
                 return ingredientStackObjs[i];
             }
         }
 
+        print("none");
         return null;
     }
 
     public void AddItem(GameObject obj)
     {
-        print("hit");
-
         if (obj.TryGetComponent(out IIngredient ingredient))
         {
             ingredientStack.AddAt<OrderableIngredients>((OrderableIngredients)ingredient.Type, ingredientStack.Count);
@@ -85,18 +88,16 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
                 {
                     ingredientStack.AddAt<OrderableIngredients>((OrderableIngredients)condiment.Type, ingredientStack.Count);
                     ingredientStackObjs.AddAt<GameObject>(obj, ingredientStackObjs.Count);
-                    condiment.ClickListener = ingredient;
                 }
             }
         }
-        
         //item is condiment and have to add the condiment to the top ingredient and the ingredient stack
         else if (obj.TryGetComponent(out ICondiment condiment))
         {
             List<ICondiment> topItemCondimentStack = 
                 GetTopItem(false).GetComponent<IIngredient>().CondimentStack;
             
-            int indexPosition = ingredientStackObjs.IndexOf(obj) + topItemCondimentStack.Count - 1;
+            int indexPosition = ingredientStackObjs.IndexOf(obj) + topItemCondimentStack.Count + 2;
             
             ingredientStack.AddAt<OrderableIngredients>((OrderableIngredients)condiment.Type,
                 indexPosition);
@@ -105,9 +106,26 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
         }
 }
 
-    public void RemoveIngredient(int ingredient)
+    public void RemoveIngredient(int ingredient, GrabHand grabHand)
     {
+        GameObject ingredientRemoved = ingredientStackObjs[ingredient];
+        IIngredient ingredientRemovedIngredient = ingredientRemoved.GetComponent<IIngredient>();
         
+        ingredientStack.RemoveAt(ingredient);
+        ingredientStackObjs.RemoveAt(ingredient);
+
+        ingredientRemoved.transform.parent = null;
+        ingredientRemoved.GetComponent<IIngredient>().ClickListener = null;
+        ingredientRemoved.GetComponent<IIngredient>().Plate = null;
+        ingredientRemoved.GetComponent<IPickupAndPlaceable>().PickUp(grabHand);
+        if (ingredientRemovedIngredient.CondimentStack.Count != 0)
+        {
+            foreach (ICondiment condiment in ingredientRemovedIngredient.CondimentStack)
+            {
+                ingredientStack.RemoveAt(ingredient);
+                ingredientStackObjs.RemoveAt(ingredient);
+            }
+        }
     }
 
     public Transform Origin

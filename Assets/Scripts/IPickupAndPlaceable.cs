@@ -36,6 +36,26 @@ public interface IPickupAndPlaceable
 
         Placed();
     }
+    public void PutDownAtLookPoint(GrabHand grabHand)
+    {
+        var playerData = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>();
+        var playerInteract = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInteract>();
+        
+        var didHitObject = Physics.Raycast(playerInteract.cameraTransform.position, playerInteract.cameraTransform.forward,
+            out var hitInfo, playerInteract.interactDist, playerInteract.interactLayerMask);
+
+        Vector3 placePoint = hitInfo.point;
+        Vector3 placePointNormal = hitInfo.normal;
+
+        playerData.HandedSetObjectInHand(null, grabHand);
+
+        ThisObject.transform.position = placePoint - Origin.localPosition;
+        ThisObject.transform.up = placePointNormal;
+        ThisObject.transform.parent = null;
+        Utils.SetLayerRecursively(ThisObject, OldLayer);
+
+        Placed();
+    }
 
     public void Consume(GrabHand grabHand)
     {

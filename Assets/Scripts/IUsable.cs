@@ -2,5 +2,6 @@
 
 public interface IUsable
 {
-    public void Use(GrabHand grabHand, bool usedOnObject, bool usedOnInteractable, GameObject objUsedOn);
+    public void Use(GrabHand grabHand);
+    public void UsedOnObject(GrabHand grabHand, GameObject objUsedOn);
 }

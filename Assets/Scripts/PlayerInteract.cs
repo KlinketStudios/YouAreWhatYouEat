@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -5,18 +6,18 @@ using UnityEngine.UI;
 public class PlayerInteract : MonoBehaviour
 {
     [SerializeField] private InputActionAsset inputAction;
-    [SerializeField] private Transform cameraTransform;
-    [SerializeField] private LayerMask interactLayerMask;
-    [SerializeField] private float interactDist;
+    [SerializeField] public Transform cameraTransform;
+    [SerializeField] public LayerMask interactLayerMask;
+    [SerializeField] public float interactDist;
 
     [SerializeField] private Sprite defaultCrosshair,
         interactableCrosshair,
         placeableCrosshair;
 
     [SerializeField] private Image crosshairImage;
-    private InputAction leftInteractionAction;
 
     private PlayerData playerData;
+    private InputAction leftInteractionAction;
     private InputAction rightInteractionAction;
 
     private void Start()
@@ -36,13 +37,35 @@ public class PlayerInteract : MonoBehaviour
         {
             objectHit = hitInfo.collider.gameObject;
             obj = objectHit;
-            if (objectHit.TryGetComponent(out DesiredRoot objectsRoot)) obj = objectsRoot.root;
+
+            if (objectHit.TryGetComponent(out DesiredRoot objectsRoot))
+                obj = objectsRoot.root;
 
             if (leftInteractionAction.WasPerformedThisFrame())
                 Interact(obj, hitInfo, GrabHand.LeftHand);
 
+
             if (rightInteractionAction.WasPerformedThisFrame())
                 Interact(obj, hitInfo, GrabHand.RightHand);
+        }
+        else
+        {
+            //not looking at object
+            if (leftInteractionAction.WasPerformedThisFrame())
+                //Clicked
+                if (playerData.HandedIsHolding(GrabHand.LeftHand))
+                    //is holding object
+                    if (playerData.HandedHeldObject(GrabHand.LeftHand).TryGetComponent(out IUsable heldUsable))
+                        //held object is usable
+                        heldUsable.Use(GrabHand.LeftHand);
+
+            if (rightInteractionAction.WasPerformedThisFrame())
+                //Clicked
+                if (playerData.HandedIsHolding(GrabHand.RightHand))
+                    //is holding object
+                    if (playerData.HandedHeldObject(GrabHand.RightHand).TryGetComponent(out IUsable heldUsable))
+                        //held object is usable
+                        heldUsable.Use(GrabHand.RightHand);
         }
 
         SetCrosshairSprite(hitInfo.normal, didHitObject, obj);
@@ -92,21 +115,46 @@ public class PlayerInteract : MonoBehaviour
 
     private void Interact(GameObject obj, RaycastHit hitInfo, GrabHand grabHand)
     {
+        // clicked on and object
         var isHoldingObject = false;
         if (playerData.HandedIsHolding(grabHand))
             isHoldingObject = true;
 
+        try
+        {
+            var isHoldingUsable = playerData.HandedHeldObject(grabHand).TryGetComponent(out IUsable usable);
+            if (isHoldingUsable)
+            {
+                //is holding object
+                //object held is a usable
+                usable.UsedOnObject(grabHand, obj);
+                return;
+            }
+        }
+        catch (Exception)
+        {
+            
+        }
+
         if (obj.TryGetComponent(out IInteractable interactable))
         {
+            //might have object in hand
+            //object clicked on is interactable
             if (isHoldingObject)
+                //is holding object
                 interactable.InteractedWithObjectInHand(playerData.HandedHeldObject(grabHand), grabHand);
             else
+                //is not holding object
                 interactable.Interacted(grabHand);
         }
         else if (isHoldingObject)
         {
+            //did not click on interactable
+            //is holding object
             playerData.HandedHeldObject(grabHand).GetComponent<IPickupAndPlaceable>()
                 .PutDown(hitInfo.point, hitInfo.normal, grabHand);
         }
+
+        
     }
 }
