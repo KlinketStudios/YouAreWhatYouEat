@@ -1,5 +1,7 @@
 ﻿using System;
+using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Condiment : MonoBehaviour, ICondiment
 {
@@ -8,10 +10,21 @@ public class Condiment : MonoBehaviour, ICondiment
     private IClickListener clickListener;
     public IIngredient ingredientOn;
     private GameObject thisObject;
-
+    [SerializeField] private Sprite[] sprites;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    
     private void Awake()
     {
+        spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
+        BoxCollider collider = spriteRenderer.GetComponent<BoxCollider>();
+        
+        collider.size = spriteRenderer.sprite.bounds.size;
         thisObject = gameObject;
+    }
+
+    private void Start()
+    {
+        
     }
 
     public void Interacted(GrabHand grabHand)
@@ -47,4 +60,5 @@ public class Condiment : MonoBehaviour, ICondiment
         get => thisObject;
         set => thisObject = value;
     }
+    
 }

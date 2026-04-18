@@ -1,5 +1,4 @@
 ﻿using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using VHierarchy.Libs;
 
@@ -9,9 +8,15 @@ public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAnd
     private GameObject thisObject;
     public GameObject condimentPrefab;
     [SerializeField] private float stackDist;
+    [SerializeField] private GameObject spriteAndCollider;
 
     private void Awake()
     {
+        SpriteRenderer spriteRenderer = spriteAndCollider.GetComponent<SpriteRenderer>();
+        BoxCollider collider = spriteRenderer.GetComponent<BoxCollider>();
+        
+        collider.size = spriteRenderer.sprite.bounds.size;
+        
         thisObject = gameObject;
     }
 

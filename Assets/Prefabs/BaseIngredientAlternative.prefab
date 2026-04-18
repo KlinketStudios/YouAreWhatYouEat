@@ -194,7 +194,7 @@ SpriteRenderer:
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.32, y: 0.32}
+  m_Size: {x: 1.8962963, y: 1}
   m_AdaptiveModeThreshold: 0.443
   m_SpriteTileMode: 1
   m_WasSpriteAssigned: 1
@@ -214,11 +214,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.8962963, y: 1, z: 0.2}
+  m_Size: {x: 0, y: 0, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6720526706905237069
 MonoBehaviour:
@@ -294,5 +294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteractableAlternativeIngredient
   origin: {fileID: 6614227413165305683}
   aimConstraint: {fileID: 6161436601692569533}
+  spriteRenderer: {fileID: 1094252803450318596}
   type: 7
+  sprites: []
   alternativeness: 0

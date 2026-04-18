@@ -6,6 +6,7 @@ public class InteractableIngredient : MonoBehaviour, IIngredient
 {
     [SerializeField] private Transform origin;
     [SerializeField] private AimConstraint aimConstraint;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     public IngredientTypes type;
     private Plate currentPlate;
     private readonly bool isPickupable = true;
@@ -15,9 +16,15 @@ public class InteractableIngredient : MonoBehaviour, IIngredient
     private GameObject thisObject;
     private int oldLayer;
 
+    [SerializeField] private Sprite[] sprites;
+
 
     private void Awake()
     {
+        spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
+        BoxCollider collider = spriteRenderer.GetComponent<BoxCollider>();
+        collider.size = spriteRenderer.sprite.bounds.size;
+        
         ThisObject = gameObject;
     }
 

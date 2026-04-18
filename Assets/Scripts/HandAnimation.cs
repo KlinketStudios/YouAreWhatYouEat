@@ -3,8 +3,10 @@ using UnityEngine;
 public class HandAnimation : MonoBehaviour
 {
 
-    [SerializeField] private GameObject leftHand;
-    [SerializeField] private GameObject rightHand;
+    [SerializeField] private SpriteRenderer leftHand;
+    [SerializeField] private SpriteRenderer rightHand;
+    [SerializeField] private GameObject handsParent;
+    
 
     [SerializeField] private float verticalAmplitude;
     [SerializeField] private float verticalFrequency;
@@ -15,8 +17,15 @@ public class HandAnimation : MonoBehaviour
 
     [SerializeField] private PlayerController movementScript;
 
-    private Vector3 leftHandStartPosition;
-    private Vector3 rightHandStartPosition;
+    [Header("Smooth Damp Variables")] 
+    [SerializeField] private float smoothTime = .1f;
+    [SerializeField] private float rotationSmoothTime = .6f;
+    [SerializeField] private GameObject handFollowObject;
+    [SerializeField] private Vector3 velocity = Vector3.zero;
+    [SerializeField] private Vector3 rotationalVelocity = Vector3.zero;
+
+    private Vector3 handFollowObjStartPos;
+
 
     private float offsetVertical;
     private float offsetHorizontal;
@@ -28,15 +37,12 @@ public class HandAnimation : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        leftHandStartPosition = leftHand.transform.localPosition;
-        rightHandStartPosition = rightHand.transform.localPosition;
+        handFollowObjStartPos = handFollowObject.transform.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        
         if (movementScript.isMoving)
         {
             timeLeft += Time.deltaTime;
@@ -45,8 +51,23 @@ public class HandAnimation : MonoBehaviour
             offsetHorizontal += Mathf.Sin(timeLeft * horizontalFrequency) * horizontalAmplitude;
             offsetVertical += Mathf.Sin(timeRight * verticalFrequency) * verticalAmplitude;
             
-            leftHand.transform.localPosition = leftHandStartPosition + new Vector3(offsetHorizontal, offsetVertical, 0);
-            rightHand.transform.localPosition = rightHandStartPosition + new Vector3(offsetHorizontal, offsetVertical, 0);
+            handFollowObject.transform.localPosition = handFollowObjStartPos + new Vector3(offsetHorizontal, offsetVertical, 0);
         }
+        else
+        {
+            timeLeft += Time.deltaTime;
+            timeRight += Time.deltaTime;
+            
+            offsetHorizontal += Mathf.Sin(timeLeft * (horizontalFrequency / 2)) * horizontalAmplitude;
+            offsetVertical += Mathf.Sin(timeRight * (verticalFrequency / 2)) * verticalAmplitude;
+            
+            handFollowObject.transform.localPosition = handFollowObjStartPos + new Vector3(offsetHorizontal, offsetVertical, 0);
+
+        }
+
+        /*handsParent.transform.position = Vector3.SmoothDamp(handsParent.transform.position, handFollowObject.transform.position,
+            ref velocity, smoothTime * Time.deltaTime);*/
+        handsParent.transform.position = handFollowObject.transform.position;
+        handsParent.transform.rotation = Quaternion.Slerp(handsParent.transform.rotation, handFollowObject.transform.rotation, rotationSmoothTime * Time.deltaTime);
     }
 }

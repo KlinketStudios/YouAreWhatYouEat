@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1460004160154864402}
   - component: {fileID: 2334198573535172693}
+  - component: {fileID: 3033487325024963486}
+  - component: {fileID: 7304386590972740908}
   m_Layer: 0
   m_Name: Sprite&Collider
   m_TagString: Untagged
@@ -86,11 +88,45 @@ SpriteRenderer:
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.14013672, y: 0.4013672}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
+--- !u!65 &3033487325024963486
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5023666995039829635}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7304386590972740908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5023666995039829635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978a8bb218ca5bd409117fb54b94ff64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DesiredRoot
+  root: {fileID: 6004639597558441367}
 --- !u!1 &5285143053403376824
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,7 +152,7 @@ Transform:
   m_GameObject: {fileID: 5285143053403376824}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.234, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -132,6 +168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3566404438913911067}
   - component: {fileID: 9181063190969297331}
+  - component: {fileID: 7236560851098475633}
   m_Layer: 0
   m_Name: BaseCondimentBottle
   m_TagString: Untagged
@@ -148,7 +185,7 @@ Transform:
   m_GameObject: {fileID: 6004639597558441367}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.501, z: 1.755}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -171,6 +208,19 @@ MonoBehaviour:
   origin: {fileID: 7544516182947047181}
   condimentPrefab: {fileID: 0}
   stackDist: 0.05
+  spriteAndCollider: {fileID: 5023666995039829635}
+--- !u!114 &7236560851098475633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6004639597558441367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e1d1f5b3aa41ae4eb20d63f971f0834, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: klinketstudiostools::KlinketStudiosTools.SetSelectionBase
 --- !u!1 &7804874939789295399
 GameObject:
   m_ObjectHideFlags: 0
