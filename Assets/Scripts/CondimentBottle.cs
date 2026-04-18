@@ -6,10 +6,14 @@ using VHierarchy.Libs;
 public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAndPlaceable
 {
     public Transform origin;
-    public GameObject thisObject;
+    private GameObject thisObject;
     public GameObject condimentPrefab;
     [SerializeField] private float stackDist;
 
+    private void Awake()
+    {
+        thisObject = gameObject;
+    }
 
     public void Interacted(GrabHand grabHand)
     {

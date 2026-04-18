@@ -22,12 +22,16 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
 
     public void Click(GrabHand grabHand)
     {
-        RemoveIngredient(ingredientStack.IndexOf((OrderableIngredients)GetTopItem(false).GetComponent<IIngredient>().Type), grabHand);
+        RemoveIngredient(ingredientStackObjs.IndexOf(GetTopItem(false)), grabHand);
     }
 
     public void ClickWithObjectInHand(GameObject obj, GrabHand grabHand)
     {
         InteractedWithObjectInHand(obj, grabHand);
+        if (obj.TryGetComponent(out IAlternativeIngredient alternativeIngredient))
+        {
+            RecalculateAlternativeness();
+        }
     }
 
     public void Interacted(GrabHand grabHand)
@@ -40,33 +44,38 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
         //check if is IIngredient
         if (obj.TryGetComponent(out IIngredient ingredient))
         {
+            ingredient.PutDown(stackPosition.position + new Vector3(0,(ingredientOffset * ingredientStack.Count), 0),Vector3.up, grabHand);
             AddItem(obj);
-            ingredient.PutDown(Vector3.zero,Vector3.zero, grabHand);
             ingredient.Plate = this;
             ingredient.ClickListener = this;
+            obj.transform.parent = gameObject.transform;
         }
     }
 
     [ContextMenu("test")]
     public GameObject GetTopItem(bool countCondiments)
     {
-        //this shii not working!!! im krilling myself
-        for (var i = ingredientStack.Count; i >= 0; i++)
+        for (var i = ingredientStack.Count - 1; i >= 0; i--)
         {
             var ingredient = ingredientStack[i];
 
-            if ((int)ingredient == 14 || (int)ingredient == 15 || (int)ingredient == 16)
+            if (ingredient == OrderableIngredients.Ketchup || 
+                ingredient == OrderableIngredients.Mayo || 
+                ingredient == OrderableIngredients.Mustard)
             {
+                //ingredient is condiment
                 if (countCondiments)
                 {
-                    print(i);
+                    print(i + "Condiment");
                     return ingredientStackObjs[i];
                 }
-
-                print(i);
-                //ingredient is condiment
+            }
+            else
+            {
+                print(i + "Ingredient");
                 return ingredientStackObjs[i];
             }
+
         }
 
         print("none");
@@ -87,7 +96,7 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
                 foreach (ICondiment condiment in ingredient.CondimentStack)
                 {
                     ingredientStack.AddAt<OrderableIngredients>((OrderableIngredients)condiment.Type, ingredientStack.Count);
-                    ingredientStackObjs.AddAt<GameObject>(obj, ingredientStackObjs.Count);
+                    ingredientStackObjs.AddAt<GameObject>(condiment.ThisObject, ingredientStackObjs.Count);
                 }
             }
         }
@@ -97,35 +106,44 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
             List<ICondiment> topItemCondimentStack = 
                 GetTopItem(false).GetComponent<IIngredient>().CondimentStack;
             
-            int indexPosition = ingredientStackObjs.IndexOf(obj) + topItemCondimentStack.Count + 2;
+            int indexPosition = ingredientStackObjs.IndexOf(obj) + topItemCondimentStack.Count + 1;
             
             ingredientStack.AddAt<OrderableIngredients>((OrderableIngredients)condiment.Type,
                 indexPosition);
 
             ingredientStackObjs.AddAt<GameObject>(obj, indexPosition);
         }
-}
 
-    public void RemoveIngredient(int ingredient, GrabHand grabHand)
+    }
+
+    public void RemoveIngredient(int ingredientIndexToRemove, GrabHand grabHand)
     {
-        GameObject ingredientRemoved = ingredientStackObjs[ingredient];
+        GameObject ingredientRemoved = ingredientStackObjs[ingredientIndexToRemove];
         IIngredient ingredientRemovedIngredient = ingredientRemoved.GetComponent<IIngredient>();
-        
-        ingredientStack.RemoveAt(ingredient);
-        ingredientStackObjs.RemoveAt(ingredient);
+     
+        print("removed" + ingredientIndexToRemove);
+        ingredientStack.RemoveAt(ingredientIndexToRemove);
+        ingredientStackObjs.RemoveAt(ingredientIndexToRemove);
 
         ingredientRemoved.transform.parent = null;
         ingredientRemoved.GetComponent<IIngredient>().ClickListener = null;
         ingredientRemoved.GetComponent<IIngredient>().Plate = null;
         ingredientRemoved.GetComponent<IPickupAndPlaceable>().PickUp(grabHand);
-        if (ingredientRemovedIngredient.CondimentStack.Count != 0)
+        if (ingredientRemovedIngredient.CondimentStack.Count > 0)
         {
             foreach (ICondiment condiment in ingredientRemovedIngredient.CondimentStack)
             {
-                ingredientStack.RemoveAt(ingredient);
-                ingredientStackObjs.RemoveAt(ingredient);
+                int index = ingredientStackObjs.IndexOf(condiment.ThisObject);
+                
+                ingredientStack.RemoveAt(index);
+                ingredientStackObjs.RemoveAt(index);
             }
         }
+    }
+
+    private void RecalculateAlternativeness()
+    {
+        print("recalculate alternativeness");
     }
 
     public Transform Origin

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Condiment : MonoBehaviour, ICondiment
 {
@@ -6,6 +7,12 @@ public class Condiment : MonoBehaviour, ICondiment
     public IngredientTypes type;
     private IClickListener clickListener;
     public IIngredient ingredientOn;
+    private GameObject thisObject;
+
+    private void Awake()
+    {
+        thisObject = gameObject;
+    }
 
     public void Interacted(GrabHand grabHand)
     {
@@ -33,5 +40,11 @@ public class Condiment : MonoBehaviour, ICondiment
     {
         get => ingredientOn;
         set => ingredientOn = value;
+    }
+
+    public GameObject ThisObject
+    {
+        get => thisObject;
+        set => thisObject = value;
     }
 }

@@ -9,9 +9,11 @@ public class InteractableIngredient : MonoBehaviour, IIngredient
     public IngredientTypes type;
     private Plate currentPlate;
     private readonly bool isPickupable = true;
-    public List<ICondiment> condimentStack = new List<ICondiment>();
+    private List<ICondiment> condimentStack = new List<ICondiment>();
     public IIngredient listener;
     private IClickListener clickListener;
+    private GameObject thisObject;
+    private int oldLayer;
 
 
     private void Awake()
@@ -61,9 +63,18 @@ public class InteractableIngredient : MonoBehaviour, IIngredient
         set => origin = value;
     }
 
-    public GameObject ThisObject { get; set; }
+    public GameObject ThisObject
+    {
+        get => thisObject;
+        set => thisObject = value;
+    }
 
-    public int OldLayer { get; set; }
+    public int OldLayer
+    {
+        get => oldLayer;
+        set => oldLayer = value;
+    }
+
 
     public IngredientTypes Type
     {
