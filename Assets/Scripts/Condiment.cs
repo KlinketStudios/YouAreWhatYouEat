@@ -1,5 +1,4 @@
 ﻿using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,11 +19,6 @@ public class Condiment : MonoBehaviour, ICondiment
         
         collider.size = spriteRenderer.sprite.bounds.size;
         thisObject = gameObject;
-    }
-
-    private void Start()
-    {
-        
     }
 
     public void Interacted(GrabHand grabHand)

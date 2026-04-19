@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Animations;
 using VHierarchy.Libs;
 
 public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAndPlaceable
@@ -9,6 +10,7 @@ public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAnd
     public GameObject condimentPrefab;
     [SerializeField] private float stackDist;
     [SerializeField] private GameObject spriteAndCollider;
+    private IClickListener clickListener;
 
     private void Awake()
     {
@@ -18,6 +20,12 @@ public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAnd
         collider.size = spriteRenderer.sprite.bounds.size;
         
         thisObject = gameObject;
+    }
+
+    public IClickListener ClickListener
+    {
+        get => clickListener;
+        set => clickListener = value;
     }
 
     public void Interacted(GrabHand grabHand)
@@ -39,13 +47,7 @@ public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAnd
 
     public int OldLayer { get; set; }
 
-    public void Grabbed()
-    {
-    }
-
-    public void Placed()
-    {
-    }
+    public Vector3 OldLocalScale { get; set; }
 
 
     public void Use(GrabHand grabHand)
@@ -64,11 +66,29 @@ public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAnd
             {
                 if (condimentUsedOn.ClickListener != null)
                 {
-                    AddCondiment(condimentUsedOn.IngredientOn.ThisObject);
+                    if (condimentUsedOn.IngredientOn.Plate != null)
+                    {
+                        AddCondiment(condimentUsedOn.IngredientOn.Plate.GetTopItem(false));
+                    }
+                    else
+                    {
+                        AddCondiment(objUsedOn);
+                    }
                     return;
                 }
             }
-            AddCondiment(objUsedOn);
+
+            if (objUsedOn.TryGetComponent(out IIngredient ingredientUsedOn))
+            {
+                if (ingredientUsedOn.Plate != null)
+                {
+                    AddCondiment(ingredientUsedOn.Plate.GetTopItem(false));
+                }
+                else
+                {
+                    AddCondiment(objUsedOn);
+                }
+            }
         }
         else
         {
@@ -82,7 +102,7 @@ public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAnd
         if (objUsedOn.TryGetComponent(out IIngredient ingredientUsedOn))
         {
             GameObject condimentCreated = Instantiate(condimentPrefab,
-                (objUsedOn.transform.position - origin.transform.localPosition) +
+                objUsedOn.transform.position  +
                 new Vector3(0, stackDist * ingredientUsedOn.CondimentStack.Count, 0),
                 Quaternion.identity);
 

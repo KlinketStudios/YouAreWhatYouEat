@@ -1,11 +1,14 @@
-﻿using KlinketStudiosTools.Utils;
+﻿using System.Threading.Tasks;
+using KlinketStudiosTools.Utils;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public interface IPickupAndPlaceable
 {
     public Transform Origin { get; set; }
     public GameObject ThisObject { get; set; }
     public int OldLayer { get; set; }
+    public Vector3 OldLocalScale { get; set; }
 
     public void PickUp(GrabHand grabHand)
     {
@@ -18,8 +21,14 @@ public interface IPickupAndPlaceable
         ThisObject.transform.position = grabPoint.position;
         ThisObject.transform.parent = grabPoint;
         OldLayer = ThisObject.layer;
+        
+        OldLocalScale = ThisObject.transform.lossyScale;
+        ThisObject.transform.localScale = grabPoint.localScale;
+        
         Utils.SetLayerRecursively(ThisObject, LayerMask.NameToLayer(playerData.grabLayer));
 
+        SetConstraintsActive(false);
+        
         Grabbed();
     }
 
@@ -32,8 +41,14 @@ public interface IPickupAndPlaceable
         ThisObject.transform.position = placePoint - Origin.localPosition;
         ThisObject.transform.up = placePointNormal;
         ThisObject.transform.parent = null;
+        
+        ThisObject.transform.localScale = OldLocalScale;
+        OldLocalScale = Vector3.zero;
+        
         Utils.SetLayerRecursively(ThisObject, OldLayer);
 
+        SetConstraintsActive(true);
+        
         Placed();
     }
     public void PutDownAtLookPoint(GrabHand grabHand)
@@ -52,8 +67,14 @@ public interface IPickupAndPlaceable
         ThisObject.transform.position = placePoint - Origin.localPosition;
         ThisObject.transform.up = placePointNormal;
         ThisObject.transform.parent = null;
+        
+        ThisObject.transform.localScale = OldLocalScale;
+        OldLocalScale = Vector3.zero;
+        
         Utils.SetLayerRecursively(ThisObject, OldLayer);
 
+        SetConstraintsActive(true);
+        
         Placed();
     }
 
@@ -63,6 +84,26 @@ public interface IPickupAndPlaceable
         GameObject.Destroy(ThisObject);
     }
     
-    public void Grabbed();
-    public void Placed();
+    public void Grabbed()
+    {
+        
+    }
+
+    public void Placed()
+    {
+        
+    }
+
+    private async void SetConstraintsActive(bool isActive)
+    {
+        await Task.Yield();
+        await Task.Yield();
+        
+        AimConstraint[] aimConstraints = ThisObject.GetComponentsInChildren<AimConstraint>();
+        foreach (AimConstraint aimConstraint in aimConstraints)
+        {
+            aimConstraint.constraintActive = isActive;
+        }
+
+    }
 }

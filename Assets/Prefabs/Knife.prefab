@@ -50,7 +50,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4491406724915423984, guid: 13c368b456991c647b994ca79358400f, type: 3}
       propertyPath: m_Name
-      value: BaseItem
+      value: Knife
+      objectReference: {fileID: 0}
+    - target: {fileID: 4491406724915423984, guid: 13c368b456991c647b994ca79358400f, type: 3}
+      propertyPath: m_TagString
+      value: Knife
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

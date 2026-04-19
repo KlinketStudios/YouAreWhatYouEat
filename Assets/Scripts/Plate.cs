@@ -14,6 +14,7 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
     public Transform origin;
     public GameObject thisObject;
     private int oldLayer;
+    private IClickListener clickListener;
 
     private void Awake()
     {
@@ -32,6 +33,12 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
         {
             RecalculateAlternativeness();
         }
+    }
+
+    public IClickListener ClickListener
+    {
+        get => clickListener;
+        set => clickListener = value;
     }
 
     public void Interacted(GrabHand grabHand)
@@ -66,19 +73,16 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
                 //ingredient is condiment
                 if (countCondiments)
                 {
-                    print(i + "Condiment");
                     return ingredientStackObjs[i];
                 }
             }
             else
             {
-                print(i + "Ingredient");
                 return ingredientStackObjs[i];
             }
 
         }
 
-        print("none");
         return null;
     }
 
@@ -105,8 +109,8 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
         {
             List<ICondiment> topItemCondimentStack = 
                 GetTopItem(false).GetComponent<IIngredient>().CondimentStack;
-            
-            int indexPosition = ingredientStackObjs.IndexOf(obj) + topItemCondimentStack.Count + 1;
+
+            int indexPosition = ingredientStackObjs.Count;
             
             ingredientStack.AddAt<OrderableIngredients>((OrderableIngredients)condiment.Type,
                 indexPosition);
@@ -121,24 +125,27 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
         GameObject ingredientRemoved = ingredientStackObjs[ingredientIndexToRemove];
         IIngredient ingredientRemovedIngredient = ingredientRemoved.GetComponent<IIngredient>();
      
-        print("removed" + ingredientIndexToRemove);
-        ingredientStack.RemoveAt(ingredientIndexToRemove);
-        ingredientStackObjs.RemoveAt(ingredientIndexToRemove);
 
         ingredientRemoved.transform.parent = null;
-        ingredientRemoved.GetComponent<IIngredient>().ClickListener = null;
-        ingredientRemoved.GetComponent<IIngredient>().Plate = null;
+        ingredientRemovedIngredient.ClickListener = null;
+        ingredientRemovedIngredient.Plate = null;
         ingredientRemoved.GetComponent<IPickupAndPlaceable>().PickUp(grabHand);
-        if (ingredientRemovedIngredient.CondimentStack.Count > 0)
+        /*if (ingredientRemovedIngredient.CondimentStack.Count > 0)
         {
             foreach (ICondiment condiment in ingredientRemovedIngredient.CondimentStack)
             {
                 int index = ingredientStackObjs.IndexOf(condiment.ThisObject);
-                
+                print(index);                
                 ingredientStack.RemoveAt(index);
                 ingredientStackObjs.RemoveAt(index);
             }
+        }*/
+        for (int i = 0; i < ingredientRemovedIngredient.CondimentStack.Count + 1; i++)
+        {
+            ingredientStack.RemoveAt(ingredientIndexToRemove);
+            ingredientStackObjs.RemoveAt(ingredientIndexToRemove);
         }
+        
     }
 
     private void RecalculateAlternativeness()
@@ -157,18 +164,10 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
         get => thisObject;
         set => thisObject = value;
     }
-
+    public Vector3 OldLocalScale { get; set; }
     public int OldLayer
     {
         get => oldLayer;
         set => oldLayer = value;
-    }
-
-    public void Grabbed()
-    {
-    }
-
-    public void Placed()
-    {
     }
 }

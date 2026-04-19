@@ -2,6 +2,14 @@ using UnityEngine;
 
 public class TrashCan : MonoBehaviour, IInteractable
 {
+    private IClickListener clickListener;
+
+    public IClickListener ClickListener
+    {
+        get => clickListener;
+        set => clickListener = value;
+    }
+
     public void Interacted(GrabHand grabHand)
     {
     }

@@ -5,7 +5,6 @@ using UnityEngine.Animations;
 public class InteractableIngredient : MonoBehaviour, IIngredient
 {
     [SerializeField] private Transform origin;
-    [SerializeField] private AimConstraint aimConstraint;
     [SerializeField] private SpriteRenderer spriteRenderer;
     public IngredientTypes type;
     private Plate currentPlate;
@@ -54,15 +53,7 @@ public class InteractableIngredient : MonoBehaviour, IIngredient
         InteractedWithObjectInHand(obj, grabHand);
     }
 
-    public void Grabbed()
-    {
-        aimConstraint.constraintActive = false;
-    }
-
-    public void Placed()
-    {
-        aimConstraint.constraintActive = true;
-    }
+    
 
     public Transform Origin
     {
@@ -94,7 +85,7 @@ public class InteractableIngredient : MonoBehaviour, IIngredient
         get => condimentStack;
         set => condimentStack = value;
     }
-
+    public Vector3 OldLocalScale { get; set; }
 
     public Plate Plate
     {

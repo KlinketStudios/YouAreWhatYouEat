@@ -75,5 +75,46 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2306541058363701021, guid: 21b0b9dd3fe7c39489427f7431b8dd94, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7315638854989582619}
+    - targetCorrespondingSourceObject: {fileID: 4052961797813243, guid: 21b0b9dd3fe7c39489427f7431b8dd94, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7626321460179620895}
   m_SourcePrefab: {fileID: 100100000, guid: 21b0b9dd3fe7c39489427f7431b8dd94, type: 3}
+--- !u!1 &6149393950526794828 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4052961797813243, guid: 21b0b9dd3fe7c39489427f7431b8dd94, type: 3}
+  m_PrefabInstance: {fileID: 6150068889807675319}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7626321460179620895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6149393950526794828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978a8bb218ca5bd409117fb54b94ff64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DesiredRoot
+  root: {fileID: 8456376695978846378}
+--- !u!1 &8456376695978846378 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2306541058363701021, guid: 21b0b9dd3fe7c39489427f7431b8dd94, type: 3}
+  m_PrefabInstance: {fileID: 6150068889807675319}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7315638854989582619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8456376695978846378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e1d1f5b3aa41ae4eb20d63f971f0834, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: klinketstudiostools::KlinketStudiosTools.SetSelectionBase
