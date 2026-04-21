@@ -32,3 +32,12 @@ public enum OrderableIngredients
     Mustard = 15,
     Ketchup = 16
 }
+
+public enum CuttableIngredients
+{
+    LettuceHead = 1,
+    WholeTomato = 3,
+    BreadLoaf = 5,
+    PepperJackBlock = 9,
+    CheddarBlock = 11,
+}

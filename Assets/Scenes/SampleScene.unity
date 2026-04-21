@@ -345,6 +345,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 96f25f9d78d55264eb049628163b3dc8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1742873997}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 96f25f9d78d55264eb049628163b3dc8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1742873998}
   m_SourcePrefab: {fileID: 100100000, guid: 96f25f9d78d55264eb049628163b3dc8, type: 3}
 --- !u!1001 &163461279
 PrefabInstance:
@@ -2754,6 +2757,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e1d1f5b3aa41ae4eb20d63f971f0834, type: 3}
   m_Name: 
   m_EditorClassIdentifier: klinketstudiostools::KlinketStudiosTools.SetSelectionBase
+--- !u!114 &1742873998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742873992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b0bade5c776fa64d9541253cc7984ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1001 &1763614943
 PrefabInstance:
   m_ObjectHideFlags: 0

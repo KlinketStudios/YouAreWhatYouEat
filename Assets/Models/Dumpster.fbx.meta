@@ -3,7 +3,12 @@ guid: 2c6946209f2740d4da9ee02640a10492
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: DumpTex
+    second: {fileID: 2800000, guid: 884c4f9761470e041bf69244c17c93de, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
