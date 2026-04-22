@@ -12,7 +12,10 @@ public interface IPickupAndPlaceable
 
     public void PickUp(GrabHand grabHand)
     {
+        
         var playerData = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>();
+        if (playerData.HandedIsHolding(grabHand))
+            return;
 
         playerData.HandedSetObjectInHand(ThisObject, grabHand);
 
@@ -49,7 +52,7 @@ public interface IPickupAndPlaceable
 
         SetConstraintsActive(true);
         
-        Placed();
+        Placed(placePointNormal);
     }
     public void PutDownAtLookPoint(GrabHand grabHand)
     {
@@ -74,8 +77,8 @@ public interface IPickupAndPlaceable
         Utils.SetLayerRecursively(ThisObject, OldLayer);
 
         SetConstraintsActive(true);
-        
-        Placed();
+
+        Placed(hitInfo.normal);
     }
 
     public void Consume(GrabHand grabHand)
@@ -89,16 +92,13 @@ public interface IPickupAndPlaceable
         
     }
 
-    public void Placed()
+    public void Placed(Vector3 normal)
     {
         
     }
 
-    private async void SetConstraintsActive(bool isActive)
+    private void SetConstraintsActive(bool isActive)
     {
-        await Task.Yield();
-        await Task.Yield();
-        
         AimConstraint[] aimConstraints = ThisObject.GetComponentsInChildren<AimConstraint>();
         foreach (AimConstraint aimConstraint in aimConstraints)
         {

@@ -152,7 +152,7 @@ public class PlayerInteract : MonoBehaviour
             //did not click on interactable
             //is holding object
             playerData.HandedHeldObject(grabHand).GetComponent<IPickupAndPlaceable>()
-                .PutDown(hitInfo.point, hitInfo.normal, grabHand);
+                .PutDownAtLookPoint(grabHand);
         }
 
         

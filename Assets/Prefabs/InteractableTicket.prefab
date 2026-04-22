@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 417809045039393976, guid: 13c368b456991c647b994ca79358400f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1540246402, guid: 710ad887f5a3d5b4e875209f9ff6868d, type: 3}
     - target: {fileID: 3246599044051127469, guid: 13c368b456991c647b994ca79358400f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -52,6 +56,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: InteractableTicket
       objectReference: {fileID: 0}
+    - target: {fileID: 5934855267743065801, guid: 13c368b456991c647b994ca79358400f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 5934855267743065801, guid: 13c368b456991c647b994ca79358400f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 5934855267743065801, guid: 13c368b456991c647b994ca79358400f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 5934855267743065801, guid: 13c368b456991c647b994ca79358400f, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -77,3 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05ae1c9c87f215342a4d0d53c987eac9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  origin: {fileID: 8832017533610912724}
+--- !u!4 &8832017533610912724 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8018495007041489239, guid: 13c368b456991c647b994ca79358400f, type: 3}
+  m_PrefabInstance: {fileID: 1573669001477087875}
+  m_PrefabAsset: {fileID: 0}
