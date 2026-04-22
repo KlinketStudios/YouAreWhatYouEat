@@ -52,9 +52,49 @@ PrefabInstance:
       propertyPath: m_Name
       value: BaseCuttableIngredient
       objectReference: {fileID: 0}
+    - target: {fileID: 6149621776139154465, guid: d9d3036bb12a88e409eb048df5537fb9, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7227193876886167946, guid: d9d3036bb12a88e409eb048df5537fb9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4491406724915423984, guid: d9d3036bb12a88e409eb048df5537fb9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3352927104786816794}
   m_SourcePrefab: {fileID: 100100000, guid: d9d3036bb12a88e409eb048df5537fb9, type: 3}
+--- !u!4 &360659835255708882 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8018495007041489239, guid: d9d3036bb12a88e409eb048df5537fb9, type: 3}
+  m_PrefabInstance: {fileID: 7657870390518699397}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6058069455617605493 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4491406724915423984, guid: d9d3036bb12a88e409eb048df5537fb9, type: 3}
+  m_PrefabInstance: {fileID: 7657870390518699397}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3352927104786816794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6058069455617605493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 035f53d675034d19a601d19f34387875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CuttableIngredient
+  cutAmount: 0
+  product: {fileID: 0}
+  cuttableType: 0
+  origin: {fileID: 360659835255708882}
+  sprite: {fileID: 0}
+  spriteRenderer: {fileID: 8037345959071316285}
+--- !u!212 &8037345959071316285 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 417809045039393976, guid: d9d3036bb12a88e409eb048df5537fb9, type: 3}
+  m_PrefabInstance: {fileID: 7657870390518699397}
+  m_PrefabAsset: {fileID: 0}

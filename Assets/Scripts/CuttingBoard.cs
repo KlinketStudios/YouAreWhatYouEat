@@ -6,44 +6,44 @@ public class CuttingBoard : MonoBehaviour, IInteractable, IClickListener
     private IClickListener clickListener;
 
     private GameObject objectCutting;
-    private GameObject cutPoint;
-
+    [SerializeField] private GameObject cutPoint;
+    [SerializeField] private float stackDist;
+    
     private CuttableIngredients[] spawnPointsInUse = new CuttableIngredients[] { (CuttableIngredients)(-1),(CuttableIngredients)(-1),(CuttableIngredients)(-1),(CuttableIngredients)(-1),(CuttableIngredients)(-1)};
-    private GameObject[] spawnPoints;
+    [SerializeField] private GameObject[] spawnPoints;
+    private int[] spawnPointItemCount = new []{0,0,0,0,0};
 
-    private int currentCuts;
     private PlayerData playerData;
 
-    public IClickListener ClickListener
-    {
-        get => clickListener;
-        set => clickListener = value;
-    }
 
     public void Interacted(GrabHand grabHand)
     {
-        
+        if (objectCutting != null)
+        {
+            GrabObject(objectCutting, grabHand);
+        }
     }
 
     private void Start()
     {
         playerData = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>();
     }
-
+    
     public void InteractedWithObjectInHand(GameObject obj, GrabHand grabHand)
     {
         if (obj.CompareTag("Knife") && objectCutting != null)
         {
-            ICuttable iCuttable = obj.GetComponent<ICuttable>();
+            ICuttable iCuttable = objectCutting.GetComponent<ICuttable>();
 
-            if ((currentCuts += 1) >= iCuttable.CutAmount)
+            if ((iCuttable.CurrentCut += 1) <= iCuttable.CutAmount)
             {
-                iCuttable.CutAmount -= 1;
-                GameObject spawnPoint = FindCorrectSpawnPoint((CuttableIngredients)iCuttable.Product.GetComponent<InteractableIngredient>().type);
+                (GameObject,int) spawnPoint = FindCorrectSpawnPoint((CuttableIngredients)iCuttable.Product.GetComponent<InteractableIngredient>().type);
 
-                Instantiate(iCuttable.Product, spawnPoint.transform.position, Quaternion.identity).GetComponent<InteractableIngredient>();
+                Instantiate(iCuttable.Product, new Vector3(spawnPoint.Item1.transform.position.x,
+                    spawnPoint.Item1.transform.position.y + stackDist * spawnPointItemCount[spawnPoint.Item2],
+                        spawnPoint.Item1.transform.position.z) - iCuttable.Product.GetComponent<IIngredient>().Origin.transform.position, Quaternion.identity);
 
-                if (currentCuts == iCuttable.CutAmount)
+                if (iCuttable.CurrentCut == iCuttable.CutAmount)
                 {
                     Destroy(objectCutting);
                 }
@@ -52,43 +52,71 @@ public class CuttingBoard : MonoBehaviour, IInteractable, IClickListener
             return;
         }
 
-        if (objectCutting == null && Enum.IsDefined(typeof(CuttableIngredients), (CuttableIngredients)obj.GetComponent<IIngredient>().Type))
+        if (objectCutting == null && Enum.IsDefined(typeof(CuttableIngredients), obj.GetComponent<CuttableIngredient>().CuttableType))
         {
-            InteractableIngredient ingredient = obj.GetComponent<InteractableIngredient>();
-            
-            objectCutting = obj;
-            obj.GetComponent<IPickupAndPlaceable>().PutDown(cutPoint.transform.position - ingredient.Origin.transform.localPosition, Vector3.up, grabHand);
-            ingredient.ClickListener = this;
+            PutObject(obj, grabHand);
         }
     }
 
-    private GameObject FindCorrectSpawnPoint(CuttableIngredients type)
+    private void GrabObject(GameObject obj, GrabHand grabHand)
     {
+        CuttableIngredient ingredient = obj.GetComponent<CuttableIngredient>();
+        
+        obj.GetComponent<IPickupAndPlaceable>().PickUp(grabHand);
+        ingredient.ClickListener = null;
+        objectCutting = null;
+
+    }
+    
+    private void PutObject(GameObject obj, GrabHand grabHand)
+    {
+        CuttableIngredient ingredient = obj.GetComponent<CuttableIngredient>();
+     
+        objectCutting = obj;
+        obj.GetComponent<IPickupAndPlaceable>().PutDown(cutPoint.transform.position - ingredient.Origin.transform.localPosition, Vector3.up, grabHand);
+        ingredient.ClickListener = this;
+    }
+
+    private (GameObject,int) FindCorrectSpawnPoint(CuttableIngredients type)
+    {
+        int x = 0;
         foreach (var spawnPointType in spawnPointsInUse)
         {
             if (spawnPointType == type)
             {
-                return gameObject;
+                spawnPointItemCount[x]++;
+                return (spawnPoints[x],x);
             }
+            x++;
         }
+        int i = 0;
         foreach (var spawnPointType in spawnPointsInUse)
         {
             if (spawnPointType == (CuttableIngredients)(-1))
             {
-                return gameObject;
+                spawnPointsInUse[i] = type;
+                spawnPointItemCount[i]++;
+                return (spawnPoints[i],i);
             }
+            i++;
         }
 
-        return null;
+        return (null, -1);
     }
 
     public void Click(GrabHand grabHand)
     {
-        throw new NotImplementedException();
+        Interacted(grabHand);
     }
 
     public void ClickWithObjectInHand(GameObject obj, GrabHand grabHand)
     {
-        throw new NotImplementedException();
+        InteractedWithObjectInHand(obj, grabHand);
+    }
+    
+    public IClickListener ClickListener
+    {
+        get => clickListener;
+        set => clickListener = value;
     }
 }

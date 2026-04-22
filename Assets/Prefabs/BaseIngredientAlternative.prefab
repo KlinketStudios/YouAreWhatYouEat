@@ -214,7 +214,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -293,7 +293,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableAlternativeIngredient
   origin: {fileID: 6614227413165305683}
-  aimConstraint: {fileID: 6161436601692569533}
   spriteRenderer: {fileID: 1094252803450318596}
   type: 7
   sprites: []
