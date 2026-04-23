@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CuttableIngredient : MonoBehaviour, ICuttable, IPickupAndPlaceable, IInteractable
+public class CuttableIngredient : MonoBehaviour, ICuttable
 {
     [SerializeField] private int cutAmount;
     [SerializeField] private GameObject product;

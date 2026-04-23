@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface ICuttable
+public interface ICuttable : IPickupAndPlaceable, IInteractable, ITrashable
 {
     public int CutAmount { get; set; }
     public CuttableIngredients CuttableType { get; set; }

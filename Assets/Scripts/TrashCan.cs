@@ -16,8 +16,10 @@ public class TrashCan : MonoBehaviour, IInteractable
 
     public void InteractedWithObjectInHand(GameObject obj, GrabHand grabhand)
     {
+        if (!obj.TryGetComponent(out ITrashable trashable))
+            return;
+        
         obj.GetComponent<IPickupAndPlaceable>().PutDown(Vector3.zero, Vector3.zero, grabhand);
-
         Destroy(obj);
     }
 }

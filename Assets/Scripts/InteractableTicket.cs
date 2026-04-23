@@ -25,33 +25,22 @@ public class InteractableTicket : MonoBehaviour, IInteractable, IPickupAndPlacea
 
     public void Placed(Vector3 normal)
     {
+        
+        if (Mathf.Abs(Vector3.Dot(normal, Vector3.up)) >= .5)
+            return;
+        
         AimConstraint ac = spriteRenderer.transform.parent.GetComponent<AimConstraint>();
         
-        ac.transform.rotation = Quaternion.identity;
+        ac.transform.localRotation = Quaternion.Euler(0,0,0);
         ac.constraintActive = false;
         ac.rotationAtRest = new Vector3();
         ac.rotationOffset = new Vector3();
 
         transform.position += Origin.transform.localPosition;
         
-        print(Vector3.Dot(normal, Vector3.up));
-        if (Vector3.Dot(normal, Vector3.up) >= -.5 && Vector3.Dot(normal, Vector3.up) <= .5f)
-        {
-            
-            transform.rotation = Quaternion.LookRotation(normal, Vector3.up);
-            Vector3 offset = transform.rotation.eulerAngles;
-                //checkpoint
-                //make ticket face the wall normal have the up go in the correct direction 
-                //test current code first
-            transform.rotation = Quaternion.FromToRotation(offset - Quaternion.LookRotation(normal).eulerAngles, Vector3.up);
-        }
-        else
-        {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            Vector3 thisPositionOnPlane = Vector3.ProjectOnPlane(transform.position, Vector3.up);
-            Vector3 playerPositionOnPlane = Vector3.ProjectOnPlane(player.transform.position, Vector3.up);
-            transform.rotation = Quaternion.LookRotation(normal, (thisPositionOnPlane - playerPositionOnPlane) * 2);
-        }
+        transform.rotation = Quaternion.LookRotation(normal, Vector3.up);
+
+        transform.position += normal * .1f;
     }
 
     public void Grabbed()
