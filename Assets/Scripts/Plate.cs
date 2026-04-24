@@ -16,6 +16,9 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
     private int oldLayer;
     private IClickListener clickListener;
 
+    [Header("Alternativeness Calculation")]
+    public float alternativeness;
+
     private void Awake()
     {
         playerData = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>();
