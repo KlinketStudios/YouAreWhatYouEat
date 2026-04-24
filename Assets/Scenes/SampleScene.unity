@@ -5153,7 +5153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 964241fe23c1ec14cbbeb840dcd2fd43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CustomerRequest
-  requestBubble: {fileID: 0}
+  requestBubble: {fileID: 329402615}
   requests: []
   thisIngredientAmountWeight:
     serializedVersion: 2

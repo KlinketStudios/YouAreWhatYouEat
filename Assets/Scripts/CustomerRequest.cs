@@ -67,8 +67,8 @@ public class CustomerRequest : MonoBehaviour
         {
             return;
         }
-    
-        OrderableIngredients requestedIngredientType = (OrderableIngredients)Random.Range(0, Enum.GetValues(typeof(OrderableIngredients)).Length);
+
+        OrderableIngredients requestedIngredientType = (OrderableIngredients)Enum.GetValues(typeof(OrderableIngredients)).GetValue(Random.Range(0, Enum.GetValues(typeof(OrderableIngredients)).Length));
     
         if (requestedIngredientTypes.Contains(requestedIngredientType))
         {

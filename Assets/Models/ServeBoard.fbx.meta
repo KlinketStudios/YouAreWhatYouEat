@@ -3,7 +3,37 @@ guid: f600d704ae8e72e4ca387e619bdd2512
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bell
+    second: {fileID: 2100000, guid: 0db1e4a9969597b418c06d7c2028301f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.004
+    second: {fileID: 2100000, guid: 5f9d066dfec0321468e1afab3c39047e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ServeBoardBase
+    second: {fileID: 2100000, guid: 580323551f3f85c4392ff25197ff8732, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TicketSpike
+    second: {fileID: 2100000, guid: 53ef80ffab8b9714485139c659fd7e7b, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: ServeBoardBase
+    second: {fileID: 2800000, guid: 83796ba1c1b6a6c4d89872ce9a4f8386, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: TicketSpike
+    second: {fileID: 2800000, guid: 33cfa9a7f88349f43be8288beb7e10a4, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
