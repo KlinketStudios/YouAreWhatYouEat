@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Animations;
+using TMPro;
 
 public class InteractableTicket : MonoBehaviour, IInteractable, IPickupAndPlaceable
 {
@@ -10,8 +11,13 @@ public class InteractableTicket : MonoBehaviour, IInteractable, IPickupAndPlacea
     private Vector3 oldLocalScale;
     [SerializeField] private SpriteRenderer spriteRenderer;
 
+    [SerializeField] private TMP_Text orderText;
+    [SerializeField] private TMP_Text orderIDText;
+    private int orderID; 
+    private string order; 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         thisObject = gameObject;
         BoxCollider collider = spriteRenderer.GetComponent<BoxCollider>();
@@ -23,6 +29,16 @@ public class InteractableTicket : MonoBehaviour, IInteractable, IPickupAndPlacea
         GetComponent<IPickupAndPlaceable>().PickUp(grabHand);
     }
 
+    public void Init(int orderID, string order)
+    {
+        thisObject = gameObject;
+        orderIDText.text = orderID.ToString();
+        orderText.text = order;
+        
+        this.orderID = orderID;
+        this.order = order;
+    }
+    
     public void Placed(Vector3 normal)
     {
         

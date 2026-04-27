@@ -93,9 +93,9 @@ public class CustomerRequest : MonoBehaviour
         foreach (var ingredient in requests)
         {
             if (text.IsNullOrEmpty())
-                text += $"({ingredient.amount}) {ingredient.type.HumanName()}";
+                text += $"({ingredient.amount}){ingredient.type.HumanName()}";
             else
-                text += $"\n({ingredient.amount}) {ingredient.type.HumanName()}";
+                text += $"\n({ingredient.amount}){ingredient.type.HumanName()}";
         }
     
         order = text;
