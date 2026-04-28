@@ -20,6 +20,8 @@ public class PlayerInteract : MonoBehaviour
     private InputAction leftInteractionAction;
     private InputAction rightInteractionAction;
 
+    [SerializeField] private PlaceableSurface defaultPlaceableSurface;
+
     private void Start()
     {
         playerData = GetComponent<PlayerData>();
@@ -156,5 +158,7 @@ public class PlayerInteract : MonoBehaviour
         }
 
         
+        
     }
+    
 }

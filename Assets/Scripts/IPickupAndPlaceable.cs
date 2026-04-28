@@ -62,6 +62,12 @@ public interface IPickupAndPlaceable
         var didHitObject = Physics.Raycast(playerInteract.cameraTransform.position, playerInteract.cameraTransform.forward,
             out var hitInfo, playerInteract.interactDist, playerInteract.interactLayerMask);
 
+
+        if (Vector3.Dot(hitInfo.normal, Vector3.up) != 1)
+        {
+            return;
+        }
+        
         Vector3 placePoint = hitInfo.point;
         Vector3 placePointNormal = hitInfo.normal;
 
