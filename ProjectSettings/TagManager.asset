@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Knife
   - CustomerPositionManager
+  - Order
   layers:
   - Default
   - TransparentFX
@@ -14,8 +15,8 @@ TagManager:
   - Water
   - UI
   - HeldObject
-  - 
-  - 
+  - Plate
+  - NonInteractable
   - 
   - 
   - 

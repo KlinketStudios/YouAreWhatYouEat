@@ -13,8 +13,8 @@ public class InteractableTicket : MonoBehaviour, IInteractable, IPickupAndPlacea
 
     [SerializeField] private TMP_Text orderText;
     [SerializeField] private TMP_Text orderIDText;
-    private int orderID; 
-    private string order; 
+    public int orderID; 
+    public string order; 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()

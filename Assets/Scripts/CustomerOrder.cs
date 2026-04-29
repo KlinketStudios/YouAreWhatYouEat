@@ -58,12 +58,12 @@ public class CustomerOrder : MonoBehaviour, IInteractable
     
     public void JudgeFood()
     {
-        List<IIngredient> tempList = new List<IIngredient>((List<IIngredient>)serveOrderEvent.dataSlot3);
+        List<OrderableIngredients> tempList = new List<OrderableIngredients>((List<OrderableIngredients>)serveOrderEvent.dataSlot3);
         List<RequestedIngredient> requestedTypes = new List<RequestedIngredient>(cr.requests);
     
         foreach (var ingredient in tempList)
         {
-            print($"init {ingredient.Type.HumanName()}");
+            print($"init {ingredient.HumanName()}");
         }
         
         int falseCounts = 0;
@@ -77,16 +77,16 @@ public class CustomerOrder : MonoBehaviour, IInteractable
                 {
                     var ingredient = tempList[x];
     
-                    if (x == ((List<IIngredient>)serveOrderEvent.dataSlot3).Count - 1 || x == 0)
+                    if (x == ((List<OrderableIngredients>)serveOrderEvent.dataSlot3).Count - 1 || x == 0)
                     {
-                        print($"skipped ingredient {ingredient.Type.HumanName()}");
+                        print($"skipped ingredient {ingredient.HumanName()}");
                         continue;
                     }
                     
-                    if ((int)ingredient.Type == (int)ingredientRequested.type)
+                    if ((int)ingredient == (int)ingredientRequested.type)
                     {
                         correctCounts++;
-                        print("+1 yes: " + ingredient.Type.HumanName());
+                        print("+1 yes: " + ingredient.HumanName());
                         tempList.RemoveAt(x);
                         foundIngredient = true;
                         break;
@@ -105,13 +105,13 @@ public class CustomerOrder : MonoBehaviour, IInteractable
         int z = 0;
         foreach (var ingredient in tempList)
         {
-            if (ingredient.Type == IngredientTypes.BreadSlice)
+            if ((IngredientTypes)ingredient == IngredientTypes.BreadSlice)
             {
-                print($"skipped ingredient {ingredient.Type.HumanName()}");
+                print($"skipped ingredient {ingredient.HumanName()}");
                 continue;
             }
             falseCounts++;
-            print("-1 extra: " + ingredient.Type.HumanName());
+            print("-1 extra: " + ingredient.HumanName());
             z++;
         }
     

@@ -41,7 +41,7 @@ public class Knife : MonoBehaviour, IInteractable, IPickupAndPlaceable
         spriteRenderer.enabled = false;
     }
 
-    public void Placed()
+    public void Placed(Vector3 normal)
     {
         spriteRenderer.enabled = true;
     }

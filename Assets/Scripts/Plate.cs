@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.UI;
 using VHierarchy.Libs;
 
 public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPlaceable
@@ -16,7 +19,9 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
     private int oldLayer;
     private IClickListener clickListener;
 
+
     [Header("Alternativeness Calculation")]
+    [SerializeField] private Slider alternativenessSlider;
     public float alternativeness;
 
     private void Awake()
@@ -121,6 +126,7 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
             ingredientStackObjs.AddAt<GameObject>(obj, indexPosition);
         }
 
+        RecalculateAlternativeness();
     }
 
     public void RemoveIngredient(int ingredientIndexToRemove, GrabHand grabHand)
@@ -148,12 +154,68 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
             ingredientStack.RemoveAt(ingredientIndexToRemove);
             ingredientStackObjs.RemoveAt(ingredientIndexToRemove);
         }
-        
+
+        RecalculateAlternativeness();
     }
 
     private void RecalculateAlternativeness()
     {
-        print("recalculate alternativeness");
+        float alternativeSum = 0;
+        float normalSum = 0;
+        
+        float totalCount = 0;
+        
+        IIngredient[] ingredients = new IIngredient[ingredientStackObjs.Count];
+
+        for (int i = 0; i < ingredientStackObjs.Count; i++)
+        {
+            ingredients[i] = ingredientStackObjs[i].GetComponent<IIngredient>();
+        }
+        
+        foreach (IIngredient ingredient in ingredients)
+        {
+            if (ingredient.ThisObject.TryGetComponent(out InteractableAlternativeIngredient alternativeIngredient))
+            {
+                alternativeSum += alternativeIngredient.Alternativeness;
+                totalCount += alternativeIngredient.Alternativeness;
+            }
+            else if (ingredient.ThisObject.TryGetComponent(out ICondiment thisCondiment))
+            {
+                //Skip condiments
+            }
+            else
+            {
+                normalSum++;
+                totalCount++;
+            }
+        }
+
+        if (!float.IsNaN(alternativeSum / totalCount))
+        {
+            alternativenessSlider.value = alternativeSum / totalCount;
+            alternativeness = alternativeSum / totalCount;
+        }
+        else
+        {
+            alternativenessSlider.value = 0;
+            alternativeness = 0;
+        }
+    }
+
+    public bool CheckIfValid()
+    {
+        
+        if((IngredientTypes)ingredientStack[0] == IngredientTypes.BreadSlice)
+            if ((IngredientTypes)ingredientStack[ingredientStack.Count - 1] == IngredientTypes.BreadSlice)
+                return true;
+
+        
+        foreach (var ingredient in ingredientStack)
+        {
+            print(ingredient.HumanName());
+        }
+        
+        return false;
     }
 
     public Transform Origin
