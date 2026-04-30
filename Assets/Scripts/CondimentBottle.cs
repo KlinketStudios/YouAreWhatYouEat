@@ -11,6 +11,7 @@ public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAnd
     [SerializeField] private float stackDist;
     [SerializeField] private GameObject spriteAndCollider;
     private IClickListener clickListener;
+    private bool placeableOnWalls;
 
     private void Awake()
     {
@@ -48,6 +49,12 @@ public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAnd
     public int OldLayer { get; set; }
 
     public Vector3 OldLocalScale { get; set; }
+
+    public bool PlaceableOnWalls
+    {
+        get => placeableOnWalls;
+        set => placeableOnWalls = value;
+    }
 
 
     public void Use(GrabHand grabHand)

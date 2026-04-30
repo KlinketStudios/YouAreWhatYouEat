@@ -73,7 +73,7 @@ public class CuttingBoard : MonoBehaviour, IInteractable, IClickListener
         CuttableIngredient ingredient = obj.GetComponent<CuttableIngredient>();
      
         objectCutting = obj;
-        obj.GetComponent<IPickupAndPlaceable>().PutDown(cutPoint.transform.position - ingredient.Origin.transform.localPosition, Vector3.up, grabHand);
+        obj.GetComponent<IPickupAndPlaceable>().PutDown(cutPoint.transform.position, Vector3.up, grabHand);
         ingredient.ClickListener = this;
     }
 

@@ -116,68 +116,68 @@ public class CustomerOrder : MonoBehaviour, IInteractable
         }
     
         float foodScore = (correctCounts - (float)falseCounts) / (float)correctCounts;
-        //float alternativeScore = GetFoodAlternativenessModifier();
+        float alternativeScore = GetFoodAlternativenessModifier();
         
         
         print("food score: " + foodScore);
-        //print("alternative score: " + alternativeScore);
-        //print("total score: " + (foodScore + alternativeScore));
+        print("alternative score: " + alternativeScore);
+        print("total score: " + (foodScore + alternativeScore));
     }
     
-    //private float GetFoodAlternativenessModifier()
-    //{
-    //    float tolerance = cr.tolerance;
-    //    float alternativenessDesire = cr.alternativenessDesire;
-    //
-    //    float positiveToleranceRange = alternativenessDesire + tolerance;
-    //    float negativeToleranceRange = alternativenessDesire - tolerance;
-    //    
-    //    float foodAlternativeness =
-    //        (serveOrderEvent.dataSlot2 as GameObject).GetComponent<Plate>().alternativeness;
-    //    
-    //    if (foodAlternativeness > positiveToleranceRange)
-    //    {
-    //        // food alternativeness over tolerance
-    //        float a = positiveToleranceRange + .5f;
-    //        float b = foodAlternativeness - positiveToleranceRange;
-    //
-    //        return -(b / (a - positiveToleranceRange));
-    //    }
-    //    else if (foodAlternativeness < negativeToleranceRange)
-    //    {
-    //        //food alternativeness under tolerance 
-    //        float a = negativeToleranceRange - .5f;
-    //        float b = foodAlternativeness - a;
-    //        return -(b / (negativeToleranceRange - b));
-    //    }
-    //    else if (Mathf.Abs(foodAlternativeness - alternativenessDesire) < tolerance)
-    //    {
-    //        //food alternativeness within tolerance rance
-    //        if (foodAlternativeness <= positiveToleranceRange && foodAlternativeness > alternativenessDesire)
-    //        {
-    //            //within tolerance but above alternativeness desire
-    //            float a = tolerance;
-    //            float b = foodAlternativeness - alternativenessDesire;
-    //
-    //            return b / a;
-    //        }
-    //        else if (foodAlternativeness >= negativeToleranceRange && foodAlternativeness < alternativenessDesire)
-    //        {
-    //            //within tolerance but under alternativeness desire
-    //            float a = tolerance;
-    //            float b = foodAlternativeness - negativeToleranceRange;
-    //
-    //            return b / a;
-    //        }
-    //        else if (foodAlternativeness == alternativenessDesire)
-    //        {
-    //            // tolerance is equal to alternativeness desire
-    //            return 1;
-    //        }
-    //    }
-    //    //can never be reached
-    //    return 0;
-    //}
+    private float GetFoodAlternativenessModifier()
+    {
+        float tolerance = cr.tolerance;
+        float alternativenessDesire = cr.alternativenessDesire;
+    
+        float positiveToleranceRange = alternativenessDesire + tolerance;
+        float negativeToleranceRange = alternativenessDesire - tolerance;
+        
+        float foodAlternativeness =
+            (serveOrderEvent.dataSlot2 as GameObject).GetComponent<Plate>().alternativeness;
+        
+        if (foodAlternativeness > positiveToleranceRange)
+        {
+            // food alternativeness over tolerance
+            float a = positiveToleranceRange + .5f;
+            float b = foodAlternativeness - positiveToleranceRange;
+    
+            return -(b / (a - positiveToleranceRange));
+        }
+        else if (foodAlternativeness < negativeToleranceRange)
+        {
+            //food alternativeness under tolerance 
+            float a = negativeToleranceRange - .5f;
+            float b = foodAlternativeness - a;
+            return -(b / (negativeToleranceRange - b));
+        }
+        else if (Mathf.Abs(foodAlternativeness - alternativenessDesire) < tolerance)
+        {
+            //food alternativeness within tolerance rance
+            if (foodAlternativeness <= positiveToleranceRange && foodAlternativeness > alternativenessDesire)
+            {
+                //within tolerance but above alternativeness desire
+                float a = tolerance;
+                float b = foodAlternativeness - alternativenessDesire;
+    
+                return b / a;
+            }
+            else if (foodAlternativeness >= negativeToleranceRange && foodAlternativeness < alternativenessDesire)
+            {
+                //within tolerance but under alternativeness desire
+                float a = tolerance;
+                float b = foodAlternativeness - negativeToleranceRange;
+    
+                return b / a;
+            }
+            else if (foodAlternativeness == alternativenessDesire)
+            {
+                // tolerance is equal to alternativeness desire
+                return 1;
+            }
+        }
+        //can never be reached
+        return 0;
+    }
     
     
     

@@ -13,6 +13,7 @@ public class CuttableIngredient : MonoBehaviour, ICuttable
     private Vector3 oldLocalScale;
     private IClickListener clickListener;
     private int currentCut;
+    private bool placeableOnWalls;
 
     private void Start()
     {
@@ -89,6 +90,12 @@ public class CuttableIngredient : MonoBehaviour, ICuttable
     {
         get => oldLocalScale;
         set => oldLocalScale = value;
+    }
+
+    public bool PlaceableOnWalls
+    {
+        get => placeableOnWalls;
+        set => placeableOnWalls = value;
     }
 
     public IClickListener ClickListener

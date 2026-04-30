@@ -14,7 +14,8 @@ public class InteractableTicket : MonoBehaviour, IInteractable, IPickupAndPlacea
     [SerializeField] private TMP_Text orderText;
     [SerializeField] private TMP_Text orderIDText;
     public int orderID; 
-    public string order; 
+    public string order;
+    private bool placeableOnWalls = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -93,5 +94,11 @@ public class InteractableTicket : MonoBehaviour, IInteractable, IPickupAndPlacea
     {
         get => oldLocalScale;
         set => oldLocalScale = value;
+    }
+
+    public bool PlaceableOnWalls
+    {
+        get => placeableOnWalls;
+        set => placeableOnWalls = value;
     }
 }

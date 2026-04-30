@@ -16,6 +16,7 @@ public class InteractableIngredient : MonoBehaviour, IIngredient
     private int oldLayer;
 
     [SerializeField] private Sprite[] sprites;
+    private bool placeableOnWalls;
 
 
     private void Awake()
@@ -86,6 +87,12 @@ public class InteractableIngredient : MonoBehaviour, IIngredient
         set => condimentStack = value;
     }
     public Vector3 OldLocalScale { get; set; }
+
+    public bool PlaceableOnWalls
+    {
+        get => placeableOnWalls;
+        set => placeableOnWalls = value;
+    }
 
     public Plate Plate
     {

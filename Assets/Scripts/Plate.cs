@@ -23,10 +23,15 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
     [Header("Alternativeness Calculation")]
     [SerializeField] private Slider alternativenessSlider;
     public float alternativeness;
+    private bool placeableOnWalls;
 
     private void Awake()
     {
         playerData = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>();
+        if (ingredientStack.Count == 0)
+        {
+            alternativenessSlider.gameObject.SetActive(false);
+        }
     }
 
     public void Click(GrabHand grabHand)
@@ -111,6 +116,7 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
                     ingredientStackObjs.AddAt<GameObject>(condiment.ThisObject, ingredientStackObjs.Count);
                 }
             }
+            alternativenessSlider.gameObject.SetActive(true);
         }
         //item is condiment and have to add the condiment to the top ingredient and the ingredient stack
         else if (obj.TryGetComponent(out ICondiment condiment))
@@ -139,22 +145,17 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
         ingredientRemovedIngredient.ClickListener = null;
         ingredientRemovedIngredient.Plate = null;
         ingredientRemoved.GetComponent<IPickupAndPlaceable>().PickUp(grabHand);
-        /*if (ingredientRemovedIngredient.CondimentStack.Count > 0)
-        {
-            foreach (ICondiment condiment in ingredientRemovedIngredient.CondimentStack)
-            {
-                int index = ingredientStackObjs.IndexOf(condiment.ThisObject);
-                print(index);                
-                ingredientStack.RemoveAt(index);
-                ingredientStackObjs.RemoveAt(index);
-            }
-        }*/
+
         for (int i = 0; i < ingredientRemovedIngredient.CondimentStack.Count + 1; i++)
         {
             ingredientStack.RemoveAt(ingredientIndexToRemove);
             ingredientStackObjs.RemoveAt(ingredientIndexToRemove);
         }
 
+        if (ingredientStack.Count == 0)
+        {
+            alternativenessSlider.gameObject.SetActive(false);
+        }
         RecalculateAlternativeness();
     }
 
@@ -230,6 +231,13 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
         set => thisObject = value;
     }
     public Vector3 OldLocalScale { get; set; }
+
+    public bool PlaceableOnWalls
+    {
+        get => placeableOnWalls;
+        set => placeableOnWalls = value;
+    }
+
     public int OldLayer
     {
         get => oldLayer;

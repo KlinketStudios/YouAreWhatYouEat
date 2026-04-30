@@ -9,6 +9,7 @@ public interface IPickupAndPlaceable
     public GameObject ThisObject { get; set; }
     public int OldLayer { get; set; }
     public Vector3 OldLocalScale { get; set; }
+    public bool PlaceableOnWalls { get; set; }
 
     public void PickUp(GrabHand grabHand)
     {
@@ -62,10 +63,40 @@ public interface IPickupAndPlaceable
         var didHitObject = Physics.Raycast(playerInteract.cameraTransform.position, playerInteract.cameraTransform.forward,
             out var hitInfo, playerInteract.interactDist, playerInteract.interactLayerMask);
 
-
-        if (Vector3.Dot(hitInfo.normal, Vector3.up) != 1)
+        if (PlaceableOnWalls)
         {
-            return;
+            if (Vector3.Dot(hitInfo.normal, Vector3.up) != 1)
+            {
+                
+                if (Mathf.Abs(Vector3.Dot(hitInfo.normal, Vector3.up)) <= 0.25f)
+                {
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+            }
+        }
+        else
+        {
+            if (Vector3.Dot(hitInfo.normal, Vector3.up) != 1)
+            {
+                
+                if (Mathf.Abs(Vector3.Dot(hitInfo.normal, Vector3.up)) <= 0.25f)
+                {
+                    return;
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+            }
         }
         
         Vector3 placePoint = hitInfo.point;

@@ -6,6 +6,7 @@ public class Knife : MonoBehaviour, IInteractable, IPickupAndPlaceable
     private IClickListener clickListener;
     [SerializeField] private Transform origin;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    private bool placeableOnWalls;
 
     private void Start()
     {
@@ -35,6 +36,12 @@ public class Knife : MonoBehaviour, IInteractable, IPickupAndPlaceable
     public GameObject ThisObject { get; set; }
     public int OldLayer { get; set; }
     public Vector3 OldLocalScale { get; set; }
+
+    public bool PlaceableOnWalls
+    {
+        get => placeableOnWalls;
+        set => placeableOnWalls = value;
+    }
 
     public void Grabbed()
     {
