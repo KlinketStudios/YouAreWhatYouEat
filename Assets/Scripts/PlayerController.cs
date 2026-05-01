@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +8,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float lookSpeed = 2f;
+
+    private SaveSystem saveSystem;
 
     [SerializeField] private float gravity;
     private Camera camera;
@@ -22,6 +25,7 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
+        saveSystem = FindFirstObjectByType<SaveSystem>();
         moveAction = inputActions.FindAction("Move");
         lookAction = inputActions.FindAction("Look");
         cc = GetComponent<CharacterController>();
@@ -31,6 +35,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        
+        
         moveDir = new Vector3(moveAction.ReadValue<Vector2>().x, -gravity, moveAction.ReadValue<Vector2>().y);
 
         isMoving = moveDir != new Vector3(0, -gravity, 0);
@@ -38,9 +44,17 @@ public class PlayerController : MonoBehaviour
         moveDir = moveDir.normalized;
 
         cc.Move(transform.TransformDirection(moveDir * (moveSpeed * Time.deltaTime)));
-        transform.Rotate(new Vector3(0, lookAction.ReadValue<Vector2>().x * (lookSpeed * Time.deltaTime), 0));
 
-        lookAngle = Mathf.Clamp(lookAngle + -lookAction.ReadValue<Vector2>().y * (lookSpeed * Time.deltaTime), -80, 80);
+    }
+
+    private void LateUpdate()
+    {
+        if (lookSpeed != saveSystem.settingsData.sensitivity)
+                 lookSpeed = saveSystem.settingsData.sensitivity;
+        
+        transform.Rotate(new Vector3(0, lookAction.ReadValue<Vector2>().x * lookSpeed , 0));
+
+        lookAngle = Mathf.Clamp(lookAngle + -lookAction.ReadValue<Vector2>().y * lookSpeed , -80, 80);
 
         camera.transform.localRotation = Quaternion.Euler(new Vector3(lookAngle, 0, 0));
     }

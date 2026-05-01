@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VHierarchy.Libs;
 
-public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPlaceable
+public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPlaceable, ITrashable
 {
     [SerializeField] private float ingredientOffset = .005f;
     public List<OrderableIngredients> ingredientStack = new();

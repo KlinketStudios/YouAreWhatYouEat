@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
 
 public class CustomerOrder : MonoBehaviour, IInteractable
@@ -63,7 +63,7 @@ public class CustomerOrder : MonoBehaviour, IInteractable
     
         foreach (var ingredient in tempList)
         {
-            print($"init {ingredient.HumanName()}");
+            print($"init {ingredient.ToString()}");
         }
         
         int falseCounts = 0;
@@ -79,14 +79,14 @@ public class CustomerOrder : MonoBehaviour, IInteractable
     
                     if (x == ((List<OrderableIngredients>)serveOrderEvent.dataSlot3).Count - 1 || x == 0)
                     {
-                        print($"skipped ingredient {ingredient.HumanName()}");
+                        print($"skipped ingredient {ingredient.ToString()}");
                         continue;
                     }
                     
                     if ((int)ingredient == (int)ingredientRequested.type)
                     {
                         correctCounts++;
-                        print("+1 yes: " + ingredient.HumanName());
+                        print("+1 yes: " + ingredient.ToString());
                         tempList.RemoveAt(x);
                         foundIngredient = true;
                         break;
@@ -97,7 +97,7 @@ public class CustomerOrder : MonoBehaviour, IInteractable
                 if (!foundIngredient)
                 {
                     falseCounts++;
-                    print("-1 no: " + ingredientRequested.type.HumanName());
+                    print("-1 no: " + ingredientRequested.type.ToString());
                 }
             }
         }
@@ -107,11 +107,11 @@ public class CustomerOrder : MonoBehaviour, IInteractable
         {
             if ((IngredientTypes)ingredient == IngredientTypes.BreadSlice)
             {
-                print($"skipped ingredient {ingredient.HumanName()}");
+                print($"skipped ingredient {ingredient.ToString()}");
                 continue;
             }
             falseCounts++;
-            print("-1 extra: " + ingredient.HumanName());
+            print("-1 extra: " + ingredient.ToString());
             z++;
         }
     

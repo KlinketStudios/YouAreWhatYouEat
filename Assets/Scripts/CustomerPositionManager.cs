@@ -19,8 +19,14 @@ public class CustomerPositionManager : MonoBehaviour
     private bool isServePositionInUse;
     
     [SerializeField] private GameObject leavePosition;
+    
+    [SerializeField] private GameObject customerSpawnPoint;
 
     [SerializeField] private Event receiptTakenEvent;
+
+    [SerializeField] private GameObject customerPrefab;
+
+    private CustomerMutationManager cmm;
 
     private void Awake()
     {
@@ -28,6 +34,7 @@ public class CustomerPositionManager : MonoBehaviour
         registerPositionsInUse = new bool[registerPositions.Length];
         waitPositionsInUse = new bool[waitPositions.Length];
         linePositionsInUse = new bool[linePositions.Length];
+        cmm = FindFirstObjectByType<CustomerMutationManager>();
     }
 
     public bool TryGetCustomerRegisterPositionAndOccupy(out GameObject position, out int positionIndex)
@@ -84,6 +91,12 @@ public class CustomerPositionManager : MonoBehaviour
     public GameObject GetLeavePositonObject()
     {
         return leavePosition;
+    }
+
+    public void SpawnCustomer()
+    {
+        Instantiate(customerPrefab, customerSpawnPoint.transform.position, Quaternion.identity);
+        cmm.CustomerSpawned();
     }
     
 /// <summary>

@@ -3,7 +3,42 @@ guid: 92473a64534acd54d8e1929a6f8d6256
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: BrickWallTex.001
+    second: {fileID: 2800000, guid: 8ce61d5b1186f0941b52661ab3351d7c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: DividerTex
+    second: {fileID: 2800000, guid: 58069382d64950243bb8f3c23719aeca, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: DumpTex.001
+    second: {fileID: 2800000, guid: ae37b0eaeca3509438114884765e947f, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: FloorTex
+    second: {fileID: 2800000, guid: 62f58f19a491bc340879d945937faa4d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: WallTex
+    second: {fileID: 2800000, guid: dd1735f2a3e6e4d40a7b2ba81b457450, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: WoodTex
+    second: {fileID: 2800000, guid: 75e50df7e0abc244cb7ef1e277a0a5a8, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: WoodenDivider
+    second: {fileID: 2800000, guid: 5a89196cd3a9ce84cbe0f206c654a5a7, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -30,7 +65,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1

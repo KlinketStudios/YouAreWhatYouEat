@@ -148,6 +148,12 @@ public class CustomerNavigation : MonoBehaviour
         {
             cpm.UnoccupyServePosition();
             agent.destination = cpm.GetLeavePositonObject().transform.position;
+            if(enterFrame)
+                cpm.SpawnCustomer();
+            if (agent.remainingDistance <= agent.stoppingDistance)
+            {
+                Destroy(gameObject);
+            }
         }
         
     #endregion
