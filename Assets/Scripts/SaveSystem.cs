@@ -88,6 +88,7 @@ public class SettingsData
 public class GameData 
 {
     public int currentDay = 1;
+    public int customersSpawnedThisDay = 0;
     public List<int> customerOccurences = new List<int>{0,0,0,0,0,0};
     
     public string pathName = "GameData";

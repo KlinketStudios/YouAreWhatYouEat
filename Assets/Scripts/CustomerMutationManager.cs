@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CustomerMutationManager : MonoBehaviour
 {
@@ -10,8 +12,8 @@ public class CustomerMutationManager : MonoBehaviour
     
     private List<int> availableCustomerTypesForDay = new List<int>{0,2,3,4};
 
-    private (int, int) lockedCustomer1 = (1, 3);
-    private (int, int) lockedCustomer2 = (5, 1);
+    private (int, int) lockedCustomer1 = (1, 4);
+    private (int, int) lockedCustomer2 = (5, 2);
 
     [SerializeField] private Sprite[] customer1Stages = new Sprite[5];  
     [SerializeField] private Sprite[] customer2Stages = new Sprite[5];  
@@ -22,9 +24,9 @@ public class CustomerMutationManager : MonoBehaviour
 
     [SerializeField] private Event dayStart;
 
-    private void Awake()
+    private void Start()
     {
-        customerOccurences = new List<int> { 0,0,0,0,0,0 };
+        customerOccurences = SaveSystem.instance.gameData.customerOccurences;
         dayManager = FindAnyObjectByType<DayManager>();
         dayStart.@event += DayStarted;
         
@@ -47,6 +49,16 @@ public class CustomerMutationManager : MonoBehaviour
     public void CustomerSpawned()
     {
         customersSpawnedThisDay++;
+    }
+
+    private void LateUpdate()
+    {
+        if (SaveSystem.instance.gameData.customerOccurences != customerOccurences)
+            SaveSystem.instance.gameData.customerOccurences = customerOccurences;
+        
+        if(SaveSystem.instance.gameData.customersSpawnedThisDay != customersSpawnedThisDay)
+            SaveSystem.instance.gameData.customersSpawnedThisDay = customersSpawnedThisDay;
+        
     }
 
     public Sprite[] GetMutationSprites(int type)
