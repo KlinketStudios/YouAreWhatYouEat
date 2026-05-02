@@ -39,7 +39,7 @@ public class SaveSystem : MonoBehaviour
         }
         else
         {
-            settingsData = new SettingsData();
+            settingsData = new SettingsData("SettingsData");
             Save();
         }
         thisPath = $"{savePath}/{gameData.pathName}.json";
@@ -49,7 +49,7 @@ public class SaveSystem : MonoBehaviour
         }
         else
         {
-            gameData = new GameData();
+            gameData = new GameData("GameData");
             Save();
         }
         thisPath = $"{savePath}/{playerSaveData.pathName}.json";
@@ -59,7 +59,7 @@ public class SaveSystem : MonoBehaviour
         }
         else
         {
-            playerSaveData = new PlayerSaveData();
+            playerSaveData = new PlayerSaveData("PlayerSaveData");
             Save();
         }
         
@@ -78,31 +78,46 @@ public class SaveSystem : MonoBehaviour
 }
 
 [Serializable]
-public class SettingsData
+public class SettingsData : Data
 {
     public float sensitivity = .3f;
     public int FPS = 60;
-    public string pathName = "SettingsData";
+    
+    public SettingsData(string pathName)
+    {
+        this.pathName = pathName;
+    }
 }
+
 [Serializable]
-public class GameData 
+public class GameData : Data
 {
     public int currentDay = 1;
     public int customersSpawnedThisDay = 0;
     public List<int> customerOccurences = new List<int>{0,0,0,0,0,0};
     
-    public string pathName = "GameData";
+    public GameData(string pathName)
+    {
+        this.pathName = pathName;
+    }
 }
 [Serializable]
-public class PlayerSaveData 
+public class PlayerSaveData : Data
 {
     public Transform playerTransform;
     public PlayerData playerData;
     public PlayerInteract playerInteract;
     public PlayerController playerController;
-    
-    public string pathName = "PlayerSaveData";
+
+    public PlayerSaveData(string pathName)
+    {
+        this.pathName = pathName;
+    }
 }
 
+public class Data
+{
+    public string pathName;
+}
 
 

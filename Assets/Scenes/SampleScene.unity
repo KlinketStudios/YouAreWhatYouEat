@@ -2845,6 +2845,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8540704544589424530, guid: 7cfb21bdad82e604fa31293aeabf93c1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1247786064}
+    - targetCorrespondingSourceObject: {fileID: 8540704544589424530, guid: 7cfb21bdad82e604fa31293aeabf93c1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1247786065}
   m_SourcePrefab: {fileID: 100100000, guid: 7cfb21bdad82e604fa31293aeabf93c1, type: 3}
 --- !u!1001 &996103636
 PrefabInstance:
@@ -3704,6 +3707,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Knife
   origin: {fileID: 1810907326}
   spriteRenderer: {fileID: 1029762834}
+--- !u!114 &1247786065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247786061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4b8492ff34bb84982e983eedde6fe7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  path: 
+  savedData:
+    pathName: 
+    data:
+    - {fileID: 1247786067}
+--- !u!4 &1247786067 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7339811551936315855, guid: 7cfb21bdad82e604fa31293aeabf93c1, type: 3}
+  m_PrefabInstance: {fileID: 884745547}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1249199026
 PrefabInstance:
   m_ObjectHideFlags: 0
