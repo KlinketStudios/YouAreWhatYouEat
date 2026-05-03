@@ -24,7 +24,8 @@ public class MainMenuAnimator : MonoBehaviour
     [Header("CreditsElements")]
     [SerializeField] private GameObject creditsPageParent;
     [SerializeField] private GameObject creditsBackButton;
-    
+
+
     
     public void SlideToSettings()
     {
