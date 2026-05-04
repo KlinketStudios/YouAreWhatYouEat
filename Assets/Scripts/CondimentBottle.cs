@@ -71,18 +71,16 @@ public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAnd
         {
             if (objUsedOn.TryGetComponent(out ICondiment condimentUsedOn))
             {
-                if (condimentUsedOn.ClickListener != null)
+                if (condimentUsedOn.IngredientOn.Plate != null)
                 {
-                    if (condimentUsedOn.IngredientOn.Plate != null)
-                    {
-                        AddCondiment(condimentUsedOn.IngredientOn.Plate.GetTopItem(false));
-                    }
-                    else
-                    {
-                        AddCondiment(objUsedOn);
-                    }
-                    return;
+                    AddCondiment(condimentUsedOn.IngredientOn.Plate.GetTopItem(false));
                 }
+                else
+                {
+                    AddCondiment(condimentUsedOn.IngredientOn.ThisObject);
+                }
+                return;
+                
             }
 
             if (objUsedOn.TryGetComponent(out IIngredient ingredientUsedOn))
@@ -110,7 +108,7 @@ public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAnd
         {
             GameObject condimentCreated = Instantiate(condimentPrefab,
                 objUsedOn.transform.position  +
-                new Vector3(0, stackDist * ingredientUsedOn.CondimentStack.Count, 0),
+                new Vector3(0, stackDist * (ingredientUsedOn.CondimentStack.Count + 1), 0),
                 Quaternion.identity);
 
             condimentCreated.transform.parent = objUsedOn.transform;
@@ -132,8 +130,8 @@ public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAnd
                 plate.AddItem(condimentCreated);
             }
 
-            ingredientUsedOn.CondimentStack.AddAt<ICondiment>(condimentPrefab.GetComponent<ICondiment>(),
-                ingredientUsedOn.CondimentStack.Count);
+            ingredientUsedOn.CondimentStack.Insert(ingredientUsedOn.CondimentStack.Count,
+                condimentPrefab.GetComponent<ICondiment>());
         }
     }
 }

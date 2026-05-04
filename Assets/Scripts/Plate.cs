@@ -103,8 +103,8 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
     {
         if (obj.TryGetComponent(out IIngredient ingredient))
         {
-            ingredientStack.AddAt<OrderableIngredients>((OrderableIngredients)ingredient.Type, ingredientStack.Count);
-            ingredientStackObjs.AddAt<GameObject>(obj, ingredientStackObjs.Count);
+            ingredientStack.Insert(ingredientStack.Count, (OrderableIngredients)ingredient.Type);
+            ingredientStackObjs.Insert(ingredientStackObjs.Count, obj);
 
             ingredient.ClickListener = this;
             
@@ -112,8 +112,8 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
             {
                 foreach (ICondiment condiment in ingredient.CondimentStack)
                 {
-                    ingredientStack.AddAt<OrderableIngredients>((OrderableIngredients)condiment.Type, ingredientStack.Count);
-                    ingredientStackObjs.AddAt<GameObject>(condiment.ThisObject, ingredientStackObjs.Count);
+                    ingredientStack.Insert(ingredientStack.Count, (OrderableIngredients)condiment.Type);
+                    ingredientStackObjs.Insert(ingredientStackObjs.Count, condiment.ThisObject);
                 }
             }
             alternativenessSlider.gameObject.SetActive(true);
@@ -126,10 +126,8 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
 
             int indexPosition = ingredientStackObjs.Count;
             
-            ingredientStack.AddAt<OrderableIngredients>((OrderableIngredients)condiment.Type,
-                indexPosition);
-
-            ingredientStackObjs.AddAt<GameObject>(obj, indexPosition);
+            ingredientStack.Insert(indexPosition, (OrderableIngredients)condiment.Type);
+            ingredientStackObjs.Insert(indexPosition, obj);
         }
 
         RecalculateAlternativeness();
@@ -146,7 +144,7 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
         ingredientRemovedIngredient.Plate = null;
         ingredientRemoved.GetComponent<IPickupAndPlaceable>().PickUp(grabHand);
 
-        for (int i = 0; i < ingredientRemovedIngredient.CondimentStack.Count + 1; i++)
+        for (int i = 0; i < ingredientRemovedIngredient.CondimentStack.Count; i++)
         {
             ingredientStack.RemoveAt(ingredientIndexToRemove);
             ingredientStackObjs.RemoveAt(ingredientIndexToRemove);

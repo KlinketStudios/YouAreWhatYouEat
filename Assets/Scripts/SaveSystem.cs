@@ -67,12 +67,14 @@ public class SaveSystem : MonoBehaviour
 
     public void Save()
     {
-        string thisPath = $"{savePath}/{settingsData.pathName}.json";
         if (!Directory.Exists(savePath))
             Directory.CreateDirectory(savePath);
         
+        string thisPath = $"{savePath}/{settingsData.pathName}.json";
         File.WriteAllText(thisPath, JsonUtility.ToJson(settingsData));
+        thisPath = $"{savePath}/{gameData.pathName}.json";
         File.WriteAllText(thisPath, JsonUtility.ToJson(gameData));
+        thisPath = $"{savePath}/{playerSaveData.pathName}.json";
         File.WriteAllText(thisPath, JsonUtility.ToJson(playerSaveData));
     }
 }
@@ -80,7 +82,7 @@ public class SaveSystem : MonoBehaviour
 [Serializable]
 public class SettingsData : Data
 {
-    public float sensitivity = .3f;
+    [Min(0.1f)] public float sensitivity = .3f;
     public int FPS = 60;
     
     public SettingsData(string pathName)

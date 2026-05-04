@@ -26,15 +26,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3566404438913911067, guid: 505a2ac0990f822479f3715b5a1287cd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1.1757412
       objectReference: {fileID: 0}
     - target: {fileID: 3566404438913911067, guid: 505a2ac0990f822479f3715b5a1287cd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.266
       objectReference: {fileID: 0}
     - target: {fileID: 3566404438913911067, guid: 505a2ac0990f822479f3715b5a1287cd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1.7246134
       objectReference: {fileID: 0}
     - target: {fileID: 3566404438913911067, guid: 505a2ac0990f822479f3715b5a1287cd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -67,6 +67,10 @@ PrefabInstance:
     - target: {fileID: 6004639597558441367, guid: 505a2ac0990f822479f3715b5a1287cd, type: 3}
       propertyPath: m_Name
       value: CondimentBottleMustard
+      objectReference: {fileID: 0}
+    - target: {fileID: 9181063190969297331, guid: 505a2ac0990f822479f3715b5a1287cd, type: 3}
+      propertyPath: stackDist
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 9181063190969297331, guid: 505a2ac0990f822479f3715b5a1287cd, type: 3}
       propertyPath: condimentPrefab

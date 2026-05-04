@@ -46,21 +46,22 @@ public class PlayerInteract : MonoBehaviour
                 Interact(obj, hitInfo, GrabHand.LeftHand);
 
 
-            if (rightInteractionAction.WasPerformedThisFrame())
+            else if (rightInteractionAction.WasPerformedThisFrame())
                 Interact(obj, hitInfo, GrabHand.RightHand);
         }
         else
         {
             //not looking at object
             if (leftInteractionAction.WasPerformedThisFrame())
+            {
                 //Clicked
                 if (playerData.HandedIsHolding(GrabHand.LeftHand))
                     //is holding object
                     if (playerData.HandedHeldObject(GrabHand.LeftHand).TryGetComponent(out IUsable heldUsable))
                         //held object is usable
                         heldUsable.Use(GrabHand.LeftHand);
-
-            if (rightInteractionAction.WasPerformedThisFrame())
+            }
+            else if (rightInteractionAction.WasPerformedThisFrame())
                 //Clicked
                 if (playerData.HandedIsHolding(GrabHand.RightHand))
                     //is holding object
