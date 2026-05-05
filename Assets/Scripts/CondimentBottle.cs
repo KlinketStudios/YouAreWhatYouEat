@@ -6,7 +6,7 @@ using VHierarchy.Libs;
 public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAndPlaceable
 {
     public Transform origin;
-    private GameObject thisObject;
+    public GameObject thisObject;
     public GameObject condimentPrefab;
     [SerializeField] private float stackDist;
     [SerializeField] private GameObject spriteAndCollider;
@@ -106,6 +106,7 @@ public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAnd
     {
         if (objUsedOn.TryGetComponent(out IIngredient ingredientUsedOn))
         {
+            print("hit");
             GameObject condimentCreated = Instantiate(condimentPrefab,
                 objUsedOn.transform.position  +
                 new Vector3(0, stackDist * (ingredientUsedOn.CondimentStack.Count + 1), 0),
@@ -115,6 +116,7 @@ public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAnd
             try
             {
                 condimentCreated.GetComponent<ICondiment>().IngredientOn = ingredientUsedOn;
+                condimentCreated.GetComponent<ICondiment>().ThisObject = condimentCreated;
                 condimentCreated.GetComponent<ICondiment>().ClickListener = objUsedOn.GetComponent<IClickListener>();
             }
             catch (Exception)
@@ -132,6 +134,7 @@ public class CondimentBottle : MonoBehaviour, IInteractable, IUsable, IPickupAnd
 
             ingredientUsedOn.CondimentStack.Insert(ingredientUsedOn.CondimentStack.Count,
                 condimentPrefab.GetComponent<ICondiment>());
+            Debug.Log(ingredientUsedOn.CondimentStack[0].ThisObject.name);
         }
     }
 }

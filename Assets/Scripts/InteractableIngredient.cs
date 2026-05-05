@@ -12,7 +12,7 @@ public class InteractableIngredient : MonoBehaviour, IIngredient
     private List<ICondiment> condimentStack = new List<ICondiment>();
     public IIngredient listener;
     private IClickListener clickListener;
-    private GameObject thisObject;
+    public GameObject thisObject;
     private int oldLayer;
 
     [SerializeField] private Sprite[] sprites;

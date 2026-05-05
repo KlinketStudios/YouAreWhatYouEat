@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+
 public interface ICondiment : IInteractable
 {
     public IngredientTypes Type { get; set; }

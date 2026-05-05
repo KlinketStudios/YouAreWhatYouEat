@@ -232,7 +232,7 @@
                 {
                     "name": "",
                     "id": "7328a8da-a525-4711-815f-6ce94bd37395",
-                    "path": "<Keyboard>/escape",
+                    "path": "<Keyboard>/equals",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Mouse&Keyboard",

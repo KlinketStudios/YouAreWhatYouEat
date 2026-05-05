@@ -19,27 +19,28 @@ public class CustomerMutation : MonoBehaviour
     
     private int thisCustomerType;
     [SerializeField] private Sprite[] stages = new Sprite[5];
+    [SerializeField] private Sprite sprite;
     
     
     private void Awake()
     {
-        cpm = GameObject.FindGameObjectWithTag("CustomerPositionManager").GetComponent<CustomerPositionManager>();
-        cmm = GameObject.FindGameObjectWithTag("CustomerMutationManager").GetComponent<CustomerMutationManager>();
-        cr = GetComponent<CustomerRequest>();
-        cn = GetComponent<CustomerNavigation>();
-        crb = cr.requestBubble;
-        co = GetComponent<CustomerOrder>();
+        sr.sprite = sprite;
+        //cpm = GameObject.FindGameObjectWithTag("CustomerPositionManager").GetComponent<CustomerPositionManager>();
+        //cmm = GameObject.FindGameObjectWithTag("CustomerMutationManager").GetComponent<CustomerMutationManager>();
+        //cr = GetComponent<CustomerRequest>();
+        //cn = GetComponent<CustomerNavigation>();
+        //crb = cr.requestBubble;
+        //co = GetComponent<CustomerOrder>();
 
-        thisCustomerType = cmm.GetRandomCustomerType();
-        stages = cmm.GetMutationSprites(thisCustomerType);
-        customerAppearanceNumber = cmm.LookUpCustomerOccurenceNumber(thisCustomerType);
+        //thisCustomerType = cmm.GetRandomCustomerType();
+        //stages = cmm.GetMutationSprites(thisCustomerType);
+        //customerAppearanceNumber = cmm.LookUpCustomerOccurenceNumber(thisCustomerType);
 
-        InitStage();
+        //InitStage();
     }
 
     private void InitStage()
     {
-        sr.sprite = stages[customerAppearanceNumber];
     }
     
 }

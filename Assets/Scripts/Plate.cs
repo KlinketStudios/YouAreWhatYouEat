@@ -144,7 +144,7 @@ public class Plate : MonoBehaviour, IInteractable, IClickListener, IPickupAndPla
         ingredientRemovedIngredient.Plate = null;
         ingredientRemoved.GetComponent<IPickupAndPlaceable>().PickUp(grabHand);
 
-        for (int i = 0; i < ingredientRemovedIngredient.CondimentStack.Count; i++)
+        for (int i = 0; i < ingredientRemovedIngredient.CondimentStack.Count + 1; i++)
         {
             ingredientStack.RemoveAt(ingredientIndexToRemove);
             ingredientStackObjs.RemoveAt(ingredientIndexToRemove);

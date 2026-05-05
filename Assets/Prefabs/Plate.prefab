@@ -613,15 +613,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 067d074dcc965c347bfcb507e5a0043c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.298
+      value: -1.8202522
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 067d074dcc965c347bfcb507e5a0043c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.051
+      value: 1.0479702
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 067d074dcc965c347bfcb507e5a0043c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.289
+      value: -1.8405186
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 067d074dcc965c347bfcb507e5a0043c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -701,7 +701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9649b435ccf667c4d9f995299ea8f84e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Plate
-  ingredientOffset: 0.05
+  ingredientOffset: 0.02
   ingredientStack: 
   ingredientStackObjs: []
   stackPosition: {fileID: 7900795972503326102}

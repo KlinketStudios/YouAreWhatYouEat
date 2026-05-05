@@ -8,7 +8,7 @@ public class Condiment : MonoBehaviour, ICondiment
     public IngredientTypes type;
     private IClickListener clickListener;
     public IIngredient ingredientOn;
-    private GameObject thisObject;
+    public GameObject thisObject;
     [SerializeField] private Sprite[] sprites;
     [SerializeField] private SpriteRenderer spriteRenderer;
     
@@ -18,6 +18,7 @@ public class Condiment : MonoBehaviour, ICondiment
         BoxCollider collider = spriteRenderer.GetComponent<BoxCollider>();
         
         collider.size = spriteRenderer.sprite.bounds.size;
+        print("thisObnjectSet");
         thisObject = gameObject;
     }
 
