@@ -20,35 +20,51 @@ public class PlayerInteract : MonoBehaviour
     private InputAction leftInteractionAction;
     private InputAction rightInteractionAction;
 
-
+    private void OnEnable()
+    {
+        //Enable Input
+        inputAction.Enable();
+        
+        //Get InputAction instances
+        rightInteractionAction = inputAction.FindAction("RightInteract");
+        leftInteractionAction = inputAction.FindAction("LeftInteract");
+    }
     private void Start()
     {
+        //Get References
         playerData = GetComponent<PlayerData>();
     }
 
     private void Update()
     {
+        //Shoot raycast to see what the player is looking at
         var didHitObject = Physics.Raycast(cameraTransform.position, cameraTransform.forward,
             out var hitInfo, interactDist, interactLayerMask);
 
         GameObject objectHit = null;
         GameObject obj = null;
 
+        //if player is looking at an object
         if (didHitObject)
         {
+            //cache object hit for this frame 
             objectHit = hitInfo.collider.gameObject;
             obj = objectHit;
 
+            //check if object hit has a desired root object and set hit object to that instead
             if (objectHit.TryGetComponent(out DesiredRoot objectsRoot))
                 obj = objectsRoot.root;
 
+            //Player interacted with left hand 
             if (leftInteractionAction.WasPerformedThisFrame())
                 Interact(obj, hitInfo, GrabHand.LeftHand);
 
 
+            //Player interacted with right hand 
             else if (rightInteractionAction.WasPerformedThisFrame())
                 Interact(obj, hitInfo, GrabHand.RightHand);
         }
+        //Player is not looking at an object
         else
         {
             //not looking at object
@@ -70,37 +86,23 @@ public class PlayerInteract : MonoBehaviour
                         heldUsable.Use(GrabHand.RightHand);
         }
 
+        //set crosshair sprite according to what player is looking at 
         SetCrosshairSprite(hitInfo.normal, didHitObject, obj);
     }
-
-    private void OnEnable()
-    {
-        rightInteractionAction = inputAction.FindAction("RightInteract");
-        leftInteractionAction = inputAction.FindAction("LeftInteract");
-        inputAction.Enable();
-    }
-
-    private void OnDisable()
-    {
-        inputAction.Disable();
-    }
-
-    //i want to make the crosshair split in half so that you can see what actions either hand can do 
-
-    //example: right now if the player looks at a pickupable intending to pick it up but has something in their other hand it
-    //         will not sow that the object in your other hand could be usable at that point in time
-
-    //         i want it to show what is possible for both hands individually 
+    
+    
     public void SetCrosshairSprite(Vector3 normal, bool didHit, GameObject hitObject)
     {
         if (!didHit)
         {
+            //not looking at anything, use default crosshair
             crosshairImage.sprite = defaultCrosshair;
             return;
         }
 
         if (hitObject.TryGetComponent(out IInteractable interactable))
         {
+            //looking at interactable, use interactable crosshair
             crosshairImage.sprite = interactableCrosshair;
             return;
         }
@@ -108,36 +110,34 @@ public class PlayerInteract : MonoBehaviour
         if (Vector3.Dot(normal, Vector3.up) == 1)
             if (playerData.HandedIsHolding(GrabHand.LeftHand) || playerData.HandedIsHolding(GrabHand.RightHand))
             {
+                //looking at placeable location && player has something in their hand, use placeable crosshair
                 crosshairImage.sprite = placeableCrosshair;
                 return;
             }
 
+        //default catch, use default crosshair
         crosshairImage.sprite = defaultCrosshair;
     }
 
     private void Interact(GameObject obj, RaycastHit hitInfo, GrabHand grabHand)
     {
-        // clicked on and object
+        //clicked on and object
+        
+        //cache is holding in respective hand
         var isHoldingObject = false;
         if (playerData.HandedIsHolding(grabHand))
             isHoldingObject = true;
 
-        try
+        //check if player is trying to use an object
+        var isHoldingUsable = playerData.HandedHeldObject(grabHand).TryGetComponent(out IUsable usable);
+        if (isHoldingUsable)
         {
-            var isHoldingUsable = playerData.HandedHeldObject(grabHand).TryGetComponent(out IUsable usable);
-            if (isHoldingUsable)
-            {
-                //is holding object
-                //object held is a usable
-                usable.UsedOnObject(grabHand, obj);
-                return;
-            }
-        }
-        catch (Exception)
-        {
-            
+            //tell held usable it was used 
+            usable.UsedOnObject(grabHand, obj);
+            return;
         }
 
+        //check if interacted with interactable 
         if (obj.TryGetComponent(out IInteractable interactable))
         {
             //might have object in hand
@@ -156,9 +156,11 @@ public class PlayerInteract : MonoBehaviour
             playerData.HandedHeldObject(grabHand).GetComponent<IPickupAndPlaceable>()
                 .PutDownAtLookPoint(grabHand);
         }
-
-        
-        
     }
     
+    private void OnDisable()
+    {
+        //Disable Input
+        inputAction.Disable();
+    }
 }
