@@ -12,19 +12,36 @@ public class Knife : MonoBehaviour, IInteractable, IPickupAndPlaceable
     {
         ThisObject = gameObject;
         
+        //set the box collider to match the size of the sprite
         BoxCollider collider = spriteRenderer.GetComponent<BoxCollider>();
         collider.size = spriteRenderer.sprite.bounds.size;
     }
+
+    public void Interacted(GrabHand grabHand)
+    {
+        //player interacted
+        //pick up 
+        GetComponent<IPickupAndPlaceable>().PickUp(grabHand);
+    }
+    
+    public void Grabbed()
+    {
+        //hide the knife to use the drawn in hand version
+        spriteRenderer.enabled = false;
+    }
+
+    public void Placed(Vector3 normal)
+    {
+        //re-show the knife
+        spriteRenderer.enabled = true;
+    }
+    
+    #region Properties
 
     public IClickListener ClickListener
     {
         get => clickListener;
         set => clickListener = value;
-    }
-
-    public void Interacted(GrabHand grabHand)
-    {
-        GetComponent<IPickupAndPlaceable>().PickUp(grabHand);
     }
 
     public Transform Origin
@@ -43,13 +60,5 @@ public class Knife : MonoBehaviour, IInteractable, IPickupAndPlaceable
         set => placeableOnWalls = value;
     }
 
-    public void Grabbed()
-    {
-        spriteRenderer.enabled = false;
-    }
-
-    public void Placed(Vector3 normal)
-    {
-        spriteRenderer.enabled = true;
-    }
+    #endregion
 }

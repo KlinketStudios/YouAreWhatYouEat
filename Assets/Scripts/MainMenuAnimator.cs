@@ -29,6 +29,7 @@ public class MainMenuAnimator : MonoBehaviour
     
     public void SlideToSettings()
     {
+        //play animation to show settings
         FlurishLeft();
         homePageParent.GetComponent<CanvasGroup>().LeanAlpha(0, .5f).setEaseOutQuart();
         homePageParent.transform.LeanMoveLocalX(-Screen.width * 1.5f, .7f).setEaseOutQuart();
@@ -39,6 +40,7 @@ public class MainMenuAnimator : MonoBehaviour
 
     public void SlideToHomeFromSettings()
     {
+        //play animation to hide settings
         FlurishRight();
         homePageParent.GetComponent<CanvasGroup>().LeanAlpha(1, .5f).setEaseOutQuart();
         homePageParent.transform.LeanMoveLocalX(0, .7f).setEaseOutBack();
@@ -49,22 +51,23 @@ public class MainMenuAnimator : MonoBehaviour
     
     private void FlurishLeft()
     {
+        //play left slide animation on the white border  
         var sequence = LeanTween.sequence();
         sequence.append(flurishes.LeanScale(Vector3.one * .98f, .2f).setLoopPingPong(1).setEaseOutCubic().setDelay(0.1f));
         sequence.append(flurishes.LeanMoveLocalX(-20, .2f).setLoopPingPong(1).setEaseOutCubic().setDelay(0.1f));
-
     }
     
     private void FlurishRight()
     {
+        //play right slide animation on the white border  
         var sequence = LeanTween.sequence();
         sequence.append(flurishes.LeanScale(Vector3.one * .98f, .2f).setLoopPingPong(1).setEaseOutCubic().setDelay(0.1f));
         sequence.append(flurishes.LeanMoveLocalX(20, .2f).setLoopPingPong(1).setEaseOutCubic().setDelay(0.1f));
-
     }
     
     public void SlideToCredits()
     {
+        //play animation to show credits
         FlurishLeft();
         homePageParent.GetComponent<CanvasGroup>().LeanAlpha(0, .5f).setEaseOutQuart();
         homePageParent.transform.LeanMoveLocalX(-Screen.width * 1.5f, .7f).setEaseOutQuart();
@@ -75,6 +78,7 @@ public class MainMenuAnimator : MonoBehaviour
 
     public void SlideToHomeFromCredits()
     {
+        //play animation to hide credits
         FlurishRight();
         homePageParent.GetComponent<CanvasGroup>().LeanAlpha(1, .5f).setEaseOutQuart();
         homePageParent.transform.LeanMoveLocalX(0, .7f).setEaseOutBack();

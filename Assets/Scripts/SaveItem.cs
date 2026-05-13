@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+
+//script does not work
 public class SaveItem : MonoBehaviour
 {
     [SerializeField, TextArea] private string path;

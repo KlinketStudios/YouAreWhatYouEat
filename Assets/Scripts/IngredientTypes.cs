@@ -1,4 +1,6 @@
-﻿public enum IngredientTypes
+﻿
+//enum values are constant for easy translation between the different types
+public enum IngredientTypes
 {
     Lettuce = 0,
     LettuceHead = 1,

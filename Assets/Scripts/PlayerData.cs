@@ -12,7 +12,12 @@ public class PlayerData : MonoBehaviour
     public Transform leftHandGrabPoint;
 
     public string grabLayer;
-
+/// <summary>
+/// check if the player is holding an item in grabHand
+/// </summary>
+/// <param name="grabHand">which hand to check</param>
+/// <returns>true if player is holding item, false if player is not</returns>
+/// <exception cref="ArgumentOutOfRangeException">can only be reached if grabHand is an invalid enum value</exception>
     public bool HandedIsHolding(GrabHand grabHand)
     {
         switch (grabHand)
@@ -25,7 +30,12 @@ public class PlayerData : MonoBehaviour
                 throw new ArgumentOutOfRangeException(nameof(grabHand), grabHand, null);
         }
     }
-
+/// <summary>
+/// get what the player is holding in grabHand
+/// </summary>
+/// <param name="grabHand">which hand to check</param>
+/// <returns>the gameobject that is being held, returns null if player is not holding anything</returns>
+/// <exception cref="ArgumentOutOfRangeException">can only be reached if grabHand is an invalid enum value</exception>
     public GameObject HandedHeldObject(GrabHand grabHand)
     {
         switch (grabHand)
@@ -38,7 +48,12 @@ public class PlayerData : MonoBehaviour
                 throw new ArgumentOutOfRangeException(nameof(grabHand), grabHand, null);
         }
     }
-
+/// <summary>
+/// get the GrabPoint transform of the grabHand 
+/// </summary>
+/// <param name="grabHand">which hand to get grabPoint of</param>
+/// <returns>the grabPoint transform of grabHand</returns>
+/// <exception cref="ArgumentOutOfRangeException">can only be reached if grabHand is an invalid enum value</exception>
     public Transform HandedGrabPoint(GrabHand grabHand)
     {
         switch (grabHand)
@@ -51,7 +66,12 @@ public class PlayerData : MonoBehaviour
                 throw new ArgumentOutOfRangeException(nameof(grabHand), grabHand, null);
         }
     }
-
+/// <summary>
+/// grab object or clear grabHand
+/// </summary>
+/// <param name="obj">what object to grab</param>
+/// <param name="grabHand">which hand to put it in</param>
+/// <exception cref="ArgumentOutOfRangeException">can only be reached if grabHand is an invalid enum value</exception>
     public void HandedSetObjectInHand(GameObject obj, GrabHand grabHand)
     {
         switch (grabHand)

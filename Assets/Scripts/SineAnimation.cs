@@ -19,12 +19,14 @@ public class SineAnimation : MonoBehaviour
     
     private void Start()
     {
+        //cache start position
         startPosition = transform.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //move this object according to all the axis
         t += Time.deltaTime;
         switch (axis)
         {
