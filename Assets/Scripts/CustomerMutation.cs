@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
+//this script is not used at the moment 
 public class CustomerMutation : MonoBehaviour
 {
 

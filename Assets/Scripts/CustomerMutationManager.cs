@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+//this script does not work, and is not in the game at the moment
 public class CustomerMutationManager : MonoBehaviour
 {
     private List<int> customerOccurences;

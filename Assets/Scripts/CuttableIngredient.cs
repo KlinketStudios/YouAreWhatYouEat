@@ -17,9 +17,12 @@ public class CuttableIngredient : MonoBehaviour, ICuttable
 
     private void Start()
     {
+        //set the sprite and fit the box collider to it
         spriteRenderer.sprite = sprite;
         BoxCollider collider = spriteRenderer.GetComponent<BoxCollider>();
         collider.size = spriteRenderer.sprite.bounds.size;
+        
+        //cache this object
         thisObject = gameObject;
     }
     
@@ -27,10 +30,13 @@ public class CuttableIngredient : MonoBehaviour, ICuttable
     {
         if (clickListener != null)
         {
+            //more than likely to be the cutting board, i think thats the only use for this right now
+            //tell any listener that this object was clicked
             clickListener.Click(grabHand);
         }
         else
         {
+            //pick up this object
             GetComponent<IPickupAndPlaceable>().PickUp(grabHand);
         }
     }
@@ -39,6 +45,8 @@ public class CuttableIngredient : MonoBehaviour, ICuttable
     {
         if (clickListener != null)
         {
+            //tell anything listening that it was clicked with an object in hand
+            //so the cutting board can figure out if the knife was in hand 
             clickListener.ClickWithObjectInHand(obj, grabHand);
         }
     }

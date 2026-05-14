@@ -16,25 +16,30 @@ public class SettingsManager : MonoBehaviour
 
     private void OnEnable()
     {
+        //cache save system and settings data 
         saveSystem = FindAnyObjectByType<SaveSystem>();
         settingsData = saveSystem.settingsData;
+        //set sliders to values saved
         senseSlider.value = settingsData.sensitivity;
         FPSSlider.value = settingsData.FPS;
     }
 
     public void OnSenseSliderValueChanged(Single single)
     {
+        //note changes to the sensitivity slider
         settingsData.sensitivity = single;
         sensitivityValue.text = single.ToString();
     }    
     public void OnFPSSliderValueChanged(Single single)
     {
+        //note changes on the FPS slider 
         settingsData.FPS = (int)single;
         FPSValue.text = single.ToString();
     }
 
     private void OnDisable()
     {
+        //save changes on settings menu close
         saveSystem.Save();
     }
 }

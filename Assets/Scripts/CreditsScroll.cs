@@ -9,6 +9,7 @@ public class CreditsScroll : MonoBehaviour
 
     void OnEnable()
     {
+        //reset the position
         if (startPosition == Vector3.zero)
             startPosition = GetComponent<RectTransform>().localPosition;
         GetComponent<RectTransform>().localPosition = startPosition;
@@ -17,6 +18,7 @@ public class CreditsScroll : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //slowly move the credits text up 
         transform.position += new Vector3(0, speed * Time.deltaTime, 0);
     }
 }
